@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   title = 'integally';
   isAuthenticated: boolean;
   name: string;
-
+  
   myChart: any;
 
   isLoading: Subject<boolean> = this.loaderService.isLoading;
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
 
       this.loadAppName();
 
-      this.name = "this.oktaAuth.getUser.name";
+      this.name = this.oktaAuth.getUser.name;
 
     }
     );
@@ -53,13 +53,6 @@ export class AppComponent implements OnInit {
     }
     );
 
-  }
-
-  async signout() {
-    // Will redirect to Okta to end the session then redirect back to the configured `postLogoutRedirectUri`
-    await this.oktaAuth.signOut();
-
-    this.oktaAuth.tokenManager.clear();
   }
 
 
