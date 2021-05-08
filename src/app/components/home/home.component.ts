@@ -110,7 +110,20 @@ export class HomeComponent implements OnInit, OnDestroy  {
             data.push(this.findVal(row, col));
           }
 
-          let dataSet = { data: data, label: label, fill: false};
+
+          let borderColor;
+
+          if (label == "DONE") {
+            borderColor = "#2fb3f5";
+          }
+          else if (label.startsWith("ERROR")) {
+            borderColor = "#f55858";
+          }
+          else {
+            borderColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+          }
+
+          let dataSet = { data: data, label: label, fill: false, borderColor: borderColor};
 
           this.chartData.push( dataSet);
 

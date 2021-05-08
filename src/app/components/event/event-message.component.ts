@@ -20,6 +20,8 @@ export class EventMessageComponent implements OnInit, OnDestroy {
   eventMessage: EventMessage;
   eventLookup: EventTemplate[];
 
+  currentPage: number = 1;
+
   statusCountReport: StatusCountReport[];
 
   subscriptionAutoLoad: Subscription;
@@ -72,7 +74,7 @@ ngOnDestroy() {
     });
 
     this.subscriptionAutoLoad = this.autoLoadInterval.subscribe(() => {
-      this.load();
+      this.load(this.currentPage);
       this.loadStatusCountReport();
     });
 
@@ -90,14 +92,18 @@ ngOnDestroy() {
 
 
 
-    this.load();
+    this.load(this.currentPage);
 
     this.loadStatusCountReport();
 
   }
 
-  load(): void {
-    this.eventMessageService.load(this.status, this.keyword);
+  loadPage(page: number) {
+    this.load(page);
+  }
+
+  load(page: number): void {
+    this.eventMessageService.load(this.status, this.keyword, page );
   }
 
   loadStatusCountReport(){
@@ -109,13 +115,13 @@ ngOnDestroy() {
   }
 
   search(){
-    this.eventMessageService.load(this.status, this.keyword);
+    this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
   clearSearch(){
     this.status = null;
     this.keyword = null;
-    this.eventMessageService.load(this.status, this.keyword);
+    this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
   delete(entity: EventMessage): void {
@@ -123,7 +129,7 @@ ngOnDestroy() {
       this.eventMessageService.delete(entity).subscribe(() => {
           this.feedback = {type: 'success', message: 'Delete was successful!'};
           setTimeout(() => {
-            this.load();
+            this.load(this.currentPage);
             this.feedback = null;
           }, 1000);
          }
@@ -144,7 +150,7 @@ ngOnDestroy() {
             this.eventMessage = result;
           this.feedback = {type: 'success', message: 'Save was successful!'};
           this.eventMessageForm.reset();
-          this.load();
+          this.load(this.currentPage);
           setTimeout(() => {
             this.feedback = null;
           }, 1000);

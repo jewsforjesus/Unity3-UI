@@ -13,6 +13,11 @@
     <button type="button" (click)="search()" class="btn btn-secondary btn-sm">Search</button>&nbsp;
     <button type="button" (click)="clearSearch()" class="btn btn-secondary btn-sm">Clear</button>&nbsp;
 
+        <ngb-pagination [(collectionSize)]="eventMessagesPageable.totalElements" [(page)]="currentPage" [pageSize]=eventMessagesPageable.size
+          [maxSize]="eventMessagesPageable.numberOfElements" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+          (pageChange)="loadPage($event)" size="sm" [disabled]='eventMessagesPageable.totalElements < eventMessagesPageable.numberOfElements'>
+        </ngb-pagination>
+
     Total: {{eventMessagesPageable.totalElements}} Current:{{eventMessagesPageable.numberOfElements}}
 
     <form [formGroup]="eventMessageForm" (ngSubmit)="onSubmit()">

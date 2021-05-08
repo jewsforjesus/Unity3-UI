@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppInfo } from 'src/app/models/app-info.model';
 import { AppInfoService } from 'src/app/services/app-info.service';
-import { StatsService } from 'src/app/services/stats.service';
-
 
 @Component({
   selector: 'app-info',

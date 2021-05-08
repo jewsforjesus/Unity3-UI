@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 
 import { Subject } from 'rxjs';
+import { AppInfoService } from 'src/app/services/app-info.service';
 import { LoaderService } from './services/loader.service';
 
 @Component({
@@ -26,31 +27,35 @@ export class AppComponent implements OnInit {
 
   isLoading: Subject<boolean> = this.loaderService.isLoading;
 
-  constructor(public oktaAuth: OktaAuthService, private loaderService: LoaderService) {
-    this.oktaAuth.$authenticationState.subscribe(isAuthenticated => this.isAuthenticated = isAuthenticated);
+  constructor(public oktaAuth: OktaAuthService, private loaderService: LoaderService, private appInfoService: AppInfoService) {
+    
+    this.oktaAuth.$authenticationState.subscribe(async isAuthenticated => {
+      this.isAuthenticated = isAuthenticated
+
+      // Get user information
+      const user = await this.oktaAuth.getUser();
+      this.name = user.name;
+      this.preferred_username = user.preferred_username;
+
+      this.loadAppName();
+
+
+    });
+
   }
 
   async ngOnInit() {
 
-    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+  }
 
-    this.oktaAuth.$authenticationState.subscribe(
-      (isAuthenticated: boolean) => this.isAuthenticated = isAuthenticated
-    );
-  
-
-    if (this.isAuthenticated) {
+  loadAppName() {
     
-      // Get user information
-      const userInfo = this.oktaAuth.getUser();
-
-      this.name = (await userInfo).name;
-      this.preferred_username = (await userInfo).preferred_username;
-
+    this.appInfoService.load().subscribe(result => {
+      this.title = result.name;
     }
-
- 
+    );
 
   }
+
 
 }
