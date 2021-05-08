@@ -21,13 +21,13 @@ export class AppComponent implements OnInit {
   title = 'integally';
   isAuthenticated: boolean;
   name: string;
-  preferred_username: string;
 
   myChart: any;
 
   isLoading: Subject<boolean> = this.loaderService.isLoading;
 
   constructor(public oktaAuth: OktaAuthService, private loaderService: LoaderService, private appInfoService: AppInfoService) {
+
   }
 
   async ngOnInit() {
@@ -35,14 +35,15 @@ export class AppComponent implements OnInit {
     this.isAuthenticated = await this.oktaAuth.isAuthenticated();
 
     this.oktaAuth.$authenticationState.subscribe(isAuthenticated => {
-      
+
       this.isAuthenticated = isAuthenticated;
 
       this.loadAppName();
-      
+
+      this.name = "this.oktaAuth.getUser.name";
+
     }
     );
-
   }
 
   loadAppName() {

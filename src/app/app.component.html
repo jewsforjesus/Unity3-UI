@@ -31,12 +31,12 @@
   <app-alert class="w-100"></app-alert>
 
   <div class="d-inline-block col-md-3 col-lg-2 ">
-  <div ngbDropdown class="d-inline-block ">
-    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{name|| ''}} </button>
-    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      <button ngbDropdownItem *ngIf="isAuthenticated" (click)="signout()" >Sign out</button>
+
+    <div *ngIf="isAuthenticated" class="d-inline-block text-light float-right ">{{name|| ''}}
+      <button type="button" class="btn btn-primary  btn-sm" (click)="oktaAuth.signOut()">Sign
+        out</button>
     </div>
-  </div>
+
 </div>
 
 </header>
