@@ -57,5 +57,12 @@ export class AppComponent implements OnInit {
 
   }
 
+  async signout() {
+    // Will redirect to Okta to end the session then redirect back to the configured `postLogoutRedirectUri`
+    await this.oktaAuth.signOut();
+
+    this.oktaAuth.tokenManager.clear();
+  }
+
 
 }

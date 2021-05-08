@@ -34,7 +34,7 @@
   <div ngbDropdown class="d-inline-block ">
     <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>{{name|| ''}} </button>
     <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-      <button ngbDropdownItem *ngIf="isAuthenticated" (click)="oktaAuth.signOut()" >Sign out</button>
+      <button ngbDropdownItem *ngIf="isAuthenticated" (click)="signout()" >Sign out</button>
     </div>
   </div>
 </div>
