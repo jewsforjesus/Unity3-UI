@@ -20,7 +20,6 @@
 
     Total: {{eventMessagesPageable.totalElements}} Current:{{eventMessagesPageable.numberOfElements}}
 
-    <form [formGroup]="eventMessageForm" (ngSubmit)="onSubmit()">
       <table class="table table-striped  table-sm">
         <thead>
           <tr>
@@ -41,34 +40,11 @@
         <tbody>
           <tr>
             <td>
-              {{f.id.value || 'n/a'}}
             </td>
             <td>
             </td>
             <td>
-              <div class="form-group">
-                <select formControlName="eventId" class="form-control">
-                  <option *ngFor="let event of eventLookup" [ngValue]="event.id">{{event.name}}</option>
-                </select>
-                <div *ngIf="f.eventId.invalid && (f.eventId.dirty || f.eventId.touched)" class="alert alert-danger">
-                  <div *ngIf="f.eventId.errors.required">
-                    Event is required.
-                  </div>
-                </div>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                <textarea formControlName="message" placeholder="message"></textarea>
-
-
-                <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)" class="alert alert-danger">
-
-                  <div *ngIf="f.message.errors.required">
-                    Message is required
-                  </div>
-                </div>
-              </div>
+   
             </td>
             <td>
 
@@ -89,13 +65,12 @@
 
             </td>
             <td>
-
+                <input type="text" class="form-control" id="txtRequeue" placeholder="Status to re-queue" [(ngModel)]="reQueueStatus">
+            </td>
+            <td>
             </td>
             <td style="white-space: nowrap">
-
-              <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!eventMessageForm.valid">Save</button>&nbsp;
-              <button type="button" class="btn btn-secondary btn-sm" (click)="clearForm()">Clear</button>
-
+              <button type="button" class="btn btn-secondary btn-sm" (click)="reQueue()">Re-Queue</button>&nbsp;
             </td>
           </tr>
 
@@ -135,6 +110,5 @@
           </tr>
         </tbody> 
       </table>
-    </form>
   </div>
 </div>

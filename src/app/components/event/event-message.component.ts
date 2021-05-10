@@ -33,6 +33,8 @@ export class EventMessageComponent implements OnInit, OnDestroy {
   status = null;
   keyword = null;
 
+  reQueueStatus = null;
+
 ngOnDestroy() {
   this.subscriptionAutoLoad.unsubscribe();
 }
@@ -51,15 +53,13 @@ ngOnDestroy() {
     private alertService: AlertService) {
   }
 
+  // eventMessageForm = new FormGroup({
+  //   id: new FormControl(''),
+  //   eventId: new FormControl(''),
+  //   message: new FormControl('')
+  // });
 
-
-  eventMessageForm = new FormGroup({
-    id: new FormControl(''),
-    eventId: new FormControl(''),
-    message: new FormControl('')
-  });
-
-  get f() { return this.eventMessageForm.controls; }
+  // get f() { return this.eventMessageForm.controls; }
 
   ngOnInit() {
 
@@ -78,11 +78,11 @@ ngOnDestroy() {
       this.loadStatusCountReport();
     });
 
-    this.eventMessageForm = this.formBuilder.group({
-      id: [''],
-      eventId: ['', [Validators.required]],
-      message: ['', [Validators.required]]
-    });
+    // this.eventMessageForm = this.formBuilder.group({
+    //   id: [''],
+    //   eventId: ['', [Validators.required]],
+    //   message: ['', [Validators.required]]
+    // });
 
     this.eventTemplateService.lookup().subscribe(
       result => {
@@ -124,6 +124,16 @@ ngOnDestroy() {
     this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
+  reQueue() {
+    this.eventMessageService.reQueue(this.reQueueStatus).subscribe(
+      result => {
+        //
+      }
+    );
+
+    this.eventMessageService.load(this.status, this.keyword, this.currentPage);
+  }
+
   delete(entity: EventMessage): void {
     if (confirm('Are you sure?')) {
       this.eventMessageService.delete(entity).subscribe(() => {
@@ -139,29 +149,29 @@ ngOnDestroy() {
 
 
 
-  onSubmit(){
+  // onSubmit(){
 
-    const id = this.eventMessageForm.get('id').value;
+  //   const id = this.eventMessageForm.get('id').value;
 
-    const isCreate = id == null || id.length == 0 ? true : false;
+  //   const isCreate = id == null || id.length == 0 ? true : false;
     
-        this.eventMessageService.save(this.eventMessageForm.value, isCreate ).subscribe(
-        result => {
-            this.eventMessage = result;
-          this.feedback = {type: 'success', message: 'Save was successful!'};
-          this.eventMessageForm.reset();
-          this.load(this.currentPage);
-          setTimeout(() => {
-            this.feedback = null;
-          }, 1000);
-        }
-      );
+  //       this.eventMessageService.save(this.eventMessageForm.value, isCreate ).subscribe(
+  //       result => {
+  //           this.eventMessage = result;
+  //         this.feedback = {type: 'success', message: 'Save was successful!'};
+  //         this.eventMessageForm.reset();
+  //         this.load(this.currentPage);
+  //         setTimeout(() => {
+  //           this.feedback = null;
+  //         }, 1000);
+  //       }
+  //     );
 
-  }
+  // }
 
-  clearForm(){
-    this.eventMessageForm.reset();
-  }
+  // clearForm(){
+  //   this.eventMessageForm.reset();
+  // }
 
   
 
