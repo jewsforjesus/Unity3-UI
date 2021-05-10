@@ -131,6 +131,8 @@ ngOnDestroy() {
       }
     );
 
+    this.reQueueStatus = null;
+
     this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
