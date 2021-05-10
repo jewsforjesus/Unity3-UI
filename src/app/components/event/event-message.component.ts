@@ -125,15 +125,21 @@ ngOnDestroy() {
   }
 
   reQueue() {
-    this.eventMessageService.reQueue(this.reQueueStatus).subscribe(
-      result => {
-        //
-      }
-    );
+
+    if (confirm('Are you sure?')) {
+
+      this.eventMessageService.reQueue(this.reQueueStatus).subscribe(
+        result => {
+          
+          this.eventMessageService.load(this.status, this.keyword, this.currentPage);
+
+        }
+      );
+      
+    }
 
     this.reQueueStatus = null;
 
-    this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
   delete(entity: EventMessage): void {
