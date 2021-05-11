@@ -33,8 +33,6 @@ export class EventMessageComponent implements OnInit, OnDestroy {
   status = null;
   keyword = null;
 
-  reQueueStatus = null;
-
 ngOnDestroy() {
   this.subscriptionAutoLoad.unsubscribe();
 }
@@ -53,13 +51,11 @@ ngOnDestroy() {
     private alertService: AlertService) {
   }
 
-  // eventMessageForm = new FormGroup({
-  //   id: new FormControl(''),
-  //   eventId: new FormControl(''),
-  //   message: new FormControl('')
-  // });
+  reQueueForm = new FormGroup({
+    status: new FormControl('')
+  });
 
-  // get f() { return this.eventMessageForm.controls; }
+  get f() { return this.reQueueForm.controls; }
 
   ngOnInit() {
 
@@ -78,19 +74,15 @@ ngOnDestroy() {
       this.loadStatusCountReport();
     });
 
-    // this.eventMessageForm = this.formBuilder.group({
-    //   id: [''],
-    //   eventId: ['', [Validators.required]],
-    //   message: ['', [Validators.required]]
-    // });
+    this.reQueueForm = this.formBuilder.group({
+      status: ['', [Validators.required]]
+    });
 
     this.eventTemplateService.lookup().subscribe(
       result => {
         this.eventLookup = result;
       }
     );
-
-
 
     this.load(this.currentPage);
 
@@ -124,13 +116,16 @@ ngOnDestroy() {
     this.eventMessageService.load(this.status, this.keyword, this.currentPage);
   }
 
-  reQueue() {
+  onReQueueSubmit() {
 
     if (confirm('Are you sure?')) {
 
-      this.eventMessageService.reQueue(this.reQueueStatus).subscribe(
+
+      const reQueueStatus = this.reQueueForm.get('status').value;
+
+      this.eventMessageService.reQueue(reQueueStatus).subscribe(
         result => {
-          
+
           this.eventMessageService.load(this.status, this.keyword, this.currentPage);
 
         }
@@ -138,8 +133,12 @@ ngOnDestroy() {
       
     }
 
-    this.reQueueStatus = null;
+    this.reQueueForm.reset();
 
+  }
+
+  clearReQueueForm() {
+    this.reQueueForm.reset();
   }
 
   delete(entity: EventMessage): void {
