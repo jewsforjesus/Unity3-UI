@@ -97,11 +97,11 @@
             <td>{{item.eventName}}</td>
             <td>{{item.message != null ? item.message.substring(0,50)+'...' : null}}</td>
             <td>{{item.size}}</td>
-            <td>{{item.startDate}}</td>
+            <td>{{item.startDate | date:'medium':'GMT'}}</td>
 
-            <td>{{item.endDate}}</td>
+            <td>{{item.endDate | date:'medium':'GMT'}}</td>
 
-            <td>{{item.duration}}µs</td>
+            <td>{{formatDuration(item.duration)}}</td>
             <td>{{item.dequeueCount}}</td>
 
             <td>
