@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LookupGroup } from 'src/app/models/lookupGroup.model';
 import { MessageTemplate } from 'src/app/models/message-template.model';
 import { Page } from 'src/app/models/page.model';
-import { LookupGroupService } from 'src/app/services/lookup-group.service';
 import { MessageTemplateService } from 'src/app/services/message-template.service';
 
 @Component({
@@ -30,7 +28,7 @@ export class MessageTemplateComponent implements OnInit {
   messageTemplateForm = new FormGroup({
     id: new FormControl(''),
     name: new FormControl(''),
-    description: new FormControl('')
+    description: new FormControl(''),
   });
 
   get f() { return this.messageTemplateForm.controls; }
@@ -64,17 +62,6 @@ export class MessageTemplateComponent implements OnInit {
     }
   }
 
-  setForEdit(entity: MessageTemplate){
-
-    if (confirm('Are you sure?')) {
-
-      this.f['id'].setValue(entity.id);
-      this.f['name'].setValue(entity.name);
-      this.f['description'].setValue(entity.description);
-
-    }
-
-  }
 
   onSubmit(){
 

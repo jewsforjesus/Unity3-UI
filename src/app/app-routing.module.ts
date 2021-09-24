@@ -15,14 +15,14 @@ import { LookupGroupComponent } from './components/lookup/lookup-group.component
 import { AppInfoComponent } from './components/about/app-info.component';
 import { ConnectorSettingComponent } from './components/connector/connector-setting.component';
 import { LookupComponent } from './components/lookup/lookup.component';
-import { MessageAttributeComponent } from './components/message-template/message-attribute.component';
 import { MessageTemplateMapComponent } from './components/mapping-template/message-template-map.component';
 import { MessageTemplateComponent } from './components/message-template/message-template.component';
-import { MessageAttributeMapComponent } from './components/mapping-template/message-attribute-map.component';
 import { EventTemplateComponent } from './components/event/event-template.component';
 import { EventMessageComponent } from './components/event/event-message.component';
 import { EventMessageEditComponent } from './components/event/event-message-edit.component';
 import { EventTemplateEditComponent } from './components/event/event-template-edit.component';
+import { MessageTemplateMapEditComponent } from './components/mapping-template/message-template-map-edit.component';
+import { MessageTemplateEditComponent } from './components/message-template/message-template-edit.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -69,18 +69,18 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
+    path: 'messagetemplates/:id',
+    component: MessageTemplateEditComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
     path: 'messagetemplatemaps',
     component:  MessageTemplateMapComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messageattributes/:messageTemplateId',
-    component:  MessageAttributeComponent,
-    canActivate: [OktaAuthGuard]
-  },
-  {
-    path: 'messageattributemaps/:messageTemplateMapId',
-    component:  MessageAttributeMapComponent,
+    path: 'messagetemplatemaps/:id',
+    component: MessageTemplateMapEditComponent,
     canActivate: [OktaAuthGuard]
   },
    {

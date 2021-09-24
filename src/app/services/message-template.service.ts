@@ -33,6 +33,11 @@ export class MessageTemplateService  extends ApiBaseService {
     return this.http.get<MessageTemplate[]>(url, this.httpOptions);
   }
 
+  loadPath(id: string): Observable<string[]> {
+    const url = `${this.apiResource}/listpath/${id}`;
+    return this.http.get<string[]>(url, this.httpOptions);
+  }
+
   save(entity: MessageTemplate, isCreate: boolean): Observable<MessageTemplate> {
     
     let url = `${this.apiResource}`;

@@ -33,10 +33,8 @@ import { LookupComponent } from './components/lookup/lookup.component';
 import { LookupService } from './services/lookup.service';
 import { MessageTemplateComponent } from './components/message-template/message-template.component';
 import { MessageAttributeService } from './services/message-attribute.service';
-import { MessageAttributeComponent } from './components/message-template/message-attribute.component';
 import { MessageTemplateMapComponent } from './components/mapping-template/message-template-map.component';
 import { MessageTemplateMapService } from './services/message-template-map.service';
-import { MessageAttributeMapComponent } from './components/mapping-template/message-attribute-map.component';
 import { MessageAttributeMapService } from './services/message-attribute-map.service';
 import { EventTemplateComponent } from './components/event/event-template.component';
 import { EventTemplateService } from './services/event-template.service';
@@ -44,6 +42,8 @@ import { EventMessageComponent } from './components/event/event-message.componen
 import { EventMessageService } from './services/event-message.service';
 import { EventMessageEditComponent } from './components/event/event-message-edit.component';
 import { EventTemplateEditComponent } from './components/event/event-template-edit.component';
+import { MessageTemplateMapEditComponent } from './components/mapping-template/message-template-map-edit.component';
+import { MessageTemplateEditComponent } from './components/message-template/message-template-edit.component';
 
 @NgModule({
   declarations: [
@@ -59,13 +59,13 @@ import { EventTemplateEditComponent } from './components/event/event-template-ed
     AppInfoComponent,
     ConnectorSettingComponent,
     LookupComponent,
-    MessageAttributeComponent,
     MessageTemplateMapComponent,
-    MessageAttributeMapComponent,
     EventTemplateComponent,
     EventMessageComponent,
     EventMessageEditComponent,
-    EventTemplateEditComponent
+    EventTemplateEditComponent,
+    MessageTemplateMapEditComponent,
+    MessageTemplateEditComponent
   ],
   imports: [
     BrowserModule,

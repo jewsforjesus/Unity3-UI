@@ -58,7 +58,8 @@ export class EventTemplateEditComponent implements OnInit {
       traceEnabled: [true],
       inactive: [false],
       routeDefinition: [null, Validators.required],
-      queueName: ['', Validators.required]
+      queueName: ['', Validators.required],
+      route: []
     });
 
   }
@@ -149,6 +150,7 @@ export class EventTemplateEditComponent implements OnInit {
         this.f['traceEnabled'].setValue(this.eventTemplate.traceEnabled);
         this.f['inactive'].setValue(this.eventTemplate.inactive);
         this.f['routeDefinition'].setValue(this.eventTemplate.routeDefinition);
+        this.f['route'].setValue(this.eventTemplate.route);
 
       }
       );

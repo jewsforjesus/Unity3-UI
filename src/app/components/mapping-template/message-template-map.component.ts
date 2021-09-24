@@ -40,12 +40,9 @@ export class MessageTemplateMapComponent implements OnInit {
     name: new FormControl(''),
     description: new FormControl(''),
     sourceMessageTemplateId: new FormControl(''),
-    sourceMessageKeyAttributeId: new FormControl(''),
-    targetMessageRelationshipAttributeId: new FormControl(''),
     targetMessageTemplateId: new FormControl(''),
-    targetMessageKeyAttributeId: new FormControl(''),
-    sourceMessageRelationshipAttributeId: new FormControl(''),
     clientScript: new FormControl(''),
+    template: new FormControl(''),
   });
 
   get f() { return this.messageTemplateMapForm.controls; }
@@ -57,12 +54,9 @@ export class MessageTemplateMapComponent implements OnInit {
       name: ['',[Validators.required]],
       description: [''],
       sourceMessageTemplateId: ['',[Validators.required]],
-      sourceMessageKeyAttributeId: [''],
-      targetMessageRelationshipAttributeId: [''],
       targetMessageTemplateId: ['',[Validators.required]],
-      targetMessageKeyAttributeId: [''],
-      sourceMessageRelationshipAttributeId: [''],
-      clientScript: ['']
+      clientScript: [''],
+      template: ['', [Validators.required]],
     });
 
     this.load();
@@ -81,29 +75,6 @@ export class MessageTemplateMapComponent implements OnInit {
     });
   }
 
-  onSelectionSourceMessage(e){
-    this.loadSourceMessageAttributeLookup(this.f.sourceMessageTemplateId.value);
-   }
-
-  onSelectionTargetMessage(e){
-    this.loadTargetMessageAttributeLookup(this.f.targetMessageTemplateId.value);
-   }
-
-  loadSourceMessageAttributeLookup(messageTemplateId: string){
-
-    this.messageAttributeService.lookup(messageTemplateId).subscribe(result => {
-      this.sourceMessageAttributes = result;
-    });
-
-  }
-
-  loadTargetMessageAttributeLookup(messageTemplateId: string){
-
-    this.messageAttributeService.lookup(messageTemplateId).subscribe(result => {
-      this.targetMessageKAttributes = result;
-    });
-
-  }
 
   delete(entity: MessageTemplateMap): void {
     if (confirm('Are you sure?')) {
@@ -126,12 +97,9 @@ export class MessageTemplateMapComponent implements OnInit {
       this.f['name'].setValue(entity.name);
       this.f['description'].setValue(entity.description);
       this.f['sourceMessageTemplateId'].setValue(entity.sourceMessageTemplateId);
-      this.f['sourceMessageKeyAttributeId'].setValue(entity.sourceMessageKeyAttributeId);
-      this.f['targetMessageRelationshipAttributeId'].setValue(entity.targetMessageRelationshipAttributeId);
       this.f['targetMessageTemplateId'].setValue(entity.targetMessageTemplateId);
-      this.f['targetMessageKeyAttributeId'].setValue(entity.targetMessageKeyAttributeId);
-      this.f['sourceMessageRelationshipAttributeId'].setValue(entity.sourceMessageRelationshipAttributeId);
       this.f['clientScript'].setValue(entity.clientScript);
+      this.f['mappings'].setValue(entity.mappings);
     }
 
   }

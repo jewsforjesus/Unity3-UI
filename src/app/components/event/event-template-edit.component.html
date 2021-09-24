@@ -128,6 +128,7 @@
         <input type="checkbox" formControlName="inactive" class="form-control">
       </div>
 
+      <pre>{{eventTemplate.route | json}}</pre>
 
       <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!eventTemplateForm.valid">Save</button>&nbsp;
       <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
