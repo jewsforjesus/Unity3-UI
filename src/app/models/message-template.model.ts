@@ -4,6 +4,7 @@ export class MessageTemplate extends Audit {
   id: string;
   name: string;
   description: string;
+  template: object;
 }
 
 export class MessageAttribute extends Audit{

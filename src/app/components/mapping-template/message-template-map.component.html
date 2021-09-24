@@ -15,91 +15,13 @@
           <th class="border-top-0" scope="col">Description</th>
           <th class="border-top-0" scope="col">sourceMessageTemplate </th>
           <th class="border-top-0" scope="col">targetMessageTemplate</th>
-          <th class="border-top-0" scope="col">clientScript</th>
-          <th class="border-top-0" scope="col" style="width:120px"></th>
+          <th class="border-top-0" scope="col" style="width:120px"><a [routerLink]="['../messagetemplatemaps', 'new' ]"
+              class="btn btn-secondary btn-sm">New template</a>&nbsp;
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr >
-          <td>
-              {{f.id.value || 'n/a'}} 
-          </td>
-          <td>
-            <div class="form-group">
-              <input formControlName="name" class="form-control">
-      
-      
-              <div *ngIf="f.name.invalid && (f.name.dirty || f.name.touched)"
-              class="alert alert-danger">
-          
-            <div *ngIf="f.name.errors.required">
-              Name is required.
-            </div>
-          </div>
-              
-            </div>
-          </td>
-          <td>
-            <div class="form-group">
-              <input formControlName="description" class="form-control">
-      
-          </div>
-          </td>
-          <td>
-            <div class="form-group">
-              <select formControlName="sourceMessageTemplateId" (change)="onSelectionSourceMessage($event)" class="form-control">
-                <option *ngFor="let template of messageTemplates" [ngValue]="template.id">{{template.name}}</option>
-              </select>
-              <div *ngIf="f.sourceMessageTemplateId.invalid && (f.sourceMessageTemplateId.dirty || f.sourceMessageTemplateId.touched)" class="alert alert-danger">
-                <div *ngIf="f.sourceMessageTemplateId.errors.required">
-                  Source message template is required.
-                </div> 
-              </div>
-            </div>
-
-            <select formControlName="sourceMessageKeyAttributeId" (change)="onSelectionSourceMessage($event)" class="form-control">
-              <option *ngFor="let attribute of sourceMessageAttributes" [ngValue]="attribute.id">{{attribute.name}}</option>
-            </select>
-
-            <select formControlName="targetMessageRelationshipAttributeId" (change)="onSelectionSourceMessage($event)" class="form-control">
-              <option *ngFor="let attribute of sourceMessageAttributes" [ngValue]="attribute.id">{{attribute.name}}</option>
-            </select>
-
-          </td>
-          <td>
-            <div class="form-group">
-              <select formControlName="targetMessageTemplateId" (change)="onSelectionTargetMessage($event)" class="form-control">
-                <option *ngFor="let template of messageTemplates" [ngValue]="template.id">{{template.name}}</option>
-              </select>
-              <div *ngIf="f.targetMessageTemplateId.invalid && (f.targetMessageTemplateId.dirty || f.targetMessageTemplateId.touched)" class="alert alert-danger">
-                <div *ngIf="f.targetMessageTemplateId.errors.required">
-                  Target message template is required.
-                </div> 
-              </div>
-            </div>
-
-            <select formControlName="targetMessageKeyAttributeId" (change)="onSelectionSourceMessage($event)" class="form-control">
-              <option *ngFor="let attribute of targetMessageKAttributes" [ngValue]="attribute.id">{{attribute.name}}</option>
-            </select>
-
-            <select formControlName="sourceMessageRelationshipAttributeId" (change)="onSelectionSourceMessage($event)" class="form-control">
-              <option *ngFor="let attribute of targetMessageKAttributes" [ngValue]="attribute.id">{{attribute.name}}</option>
-            </select>
-
-          </td>
-          <td>
-            <div class="form-group">
-              <textarea formControlName="clientScript" class="form-control"></textarea>
-          </div>
-          </td>
-
-          <td style="white-space: nowrap">
-
-            <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateMapForm.valid" >Save</button>&nbsp;
-            <button type="button" class="btn btn-secondary btn-sm" (click)="clearForm()" >Clear</button>
-
-          </td>
-        </tr>
+       
 
         <tr *ngFor="let item of messageTemplateMapsPageable.content" >
         
@@ -108,23 +30,13 @@
           <td>{{item.description}}</td>
           <td>
             {{item.sourceMessageTemplateName}}
-            <ul>
-              <li>K: {{item.sourceMessageKeyAttributeName}}</li>
-              <li>TK: {{item.targetMessageRelationshipAttributeName}}</li>
-            </ul>
           </td>
           <td>
             {{item.targetMessageTemplateName}}
-            <ul>
-              <li>K: {{item.targetMessageKeyAttributeName}}</li>
-              <li>SK: {{item.sourceMessageRelationshipAttributeName}}</li>
-            </ul>
           </td>
-          <td>{{item.clientScript != null ? item.clientScript.substring(0,40)+'...' : null}}</td>
 
           <td style="white-space: nowrap">
-            <a [routerLink]="['../messageattributemaps', item.id ]" class="btn btn-secondary btn-sm">Maps</a>&nbsp;
-            <button type="button" (click)="setForEdit(item)" class="btn btn-secondary btn-sm">Edit</button>&nbsp;
+            <a [routerLink]="['../messagetemplatemaps', item.id ]" class="btn btn-secondary btn-sm">Map/Edit</a>&nbsp;
             <button type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
           </td>
         </tr>

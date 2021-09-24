@@ -8,15 +8,10 @@ export class MessageTemplateMap extends Audit{
   sourceMessageTemplateName: string;
   sourceMessageKeyAttributeId: string;
   targetMessageRelationshipAttributeId: string;
-  sourceMessageKeyAttributeName;
-  targetMessageRelationshipAttributeName;
   targetMessageTemplateId: string;
   targetMessageTemplateName: string;
-  targetMessageKeyAttributeId: string;
-  sourceMessageRelationshipAttributeId: string;
-  targetMessageKeyAttributeName: string;
-  sourceMessageRelationshipAttributeName: string;
   clientScript: string;
+  mappings: MapTemplate[];
 }
 
 export class MessageAttributeMap extends Audit{
@@ -39,4 +34,16 @@ export class MessageAttributeMapSource extends Audit{
   sourceMessageAttributeId: string;
   sourceMessageAttributeName: string;
 
+}
+
+export class MapTemplate{
+  sources: source[];
+  client_function: string;
+  function: string;
+  inactive: string;
+  target: string;
+}
+
+export class source {
+  source: string;
 }

@@ -13,6 +13,7 @@ export class EventTemplate extends Audit {
   size: number;
   routeDefinition: any;
   queueName: string;
+  route: any;
 }
 
 

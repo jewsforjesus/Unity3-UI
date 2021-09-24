@@ -31,6 +31,18 @@ export class MessageTemplateMapService  extends ApiBaseService {
     
   }
 
+
+  loadClasses(): Observable<string[]> {
+    const url = `${this.apiResource}/classlist`;
+    return this.http.get<string[]>(url, this.httpOptions);
+  }
+
+
+  loadMethods(className:string): Observable<string[]> {
+    const url = `${this.apiResource}/funclist/${className}`;
+    return this.http.get<string[]>(url, this.httpOptions);
+  }
+
   save(entity: MessageTemplateMap, isCreate: boolean): Observable<MessageTemplateMap> {
     let params = new HttpParams();
 
