@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FileService } from '../../services/file.service';
-import { File } from 'src/app/models/file.model';
 import { ConnectorService } from 'src/app/services/connector.service';
 import { Connector, ConnectorSetting } from 'src/app/models/connector.model';
 import { Page } from 'src/app/models/page.model';
@@ -38,7 +36,6 @@ export class ConnectorSettingComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, 
     private route: ActivatedRoute,
-    private router: Router, 
     private connectorSettingService: ConnectorSettingService,
     private connectorService: ConnectorService
     ) {

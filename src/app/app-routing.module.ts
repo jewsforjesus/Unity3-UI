@@ -12,17 +12,16 @@ import { TraceComponent } from './components/trace/trace.component';
 import { TraceInstanceListComponent } from './components/trace/trace-instance-list.component';
 import { TraceListComponent } from './components/trace/trace-list.component';
 import { LookupGroupComponent } from './components/lookup/lookup-group.component';
-import { AppInfoComponent } from './components/about/app-info.component';
 import { ConnectorSettingComponent } from './components/connector/connector-setting.component';
 import { LookupComponent } from './components/lookup/lookup.component';
-import { MessageTemplateMapComponent } from './components/mapping-template/message-template-map.component';
-import { MessageTemplateComponent } from './components/message-template/message-template.component';
-import { EventTemplateComponent } from './components/event/event-template.component';
-import { EventMessageComponent } from './components/event/event-message.component';
-import { EventMessageEditComponent } from './components/event/event-message-edit.component';
-import { EventTemplateEditComponent } from './components/event/event-template-edit.component';
-import { MessageTemplateMapEditComponent } from './components/mapping-template/message-template-map-edit.component';
-import { MessageTemplateEditComponent } from './components/message-template/message-template-edit.component';
+import {  RouteComponent } from './components/event/route.component';
+import { RouteEditComponent } from './components/event/route-edit.component';
+import { SettingComponent } from './components/setting/setting.component';
+import { TemplateComponent } from './components/template/template.component';
+import { TemplateEditComponent } from './components/template/template-edit.component';
+import { MappingComponent } from './components/mapping/mapping.component';
+import { MappingEditComponent } from './components/mapping/mapping-edit.component';
+import { QueueComponent } from './components/queue/queue.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -64,43 +63,43 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messagetemplates',
-    component:  MessageTemplateComponent,
+    path: 'templates',
+    component:  TemplateComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messagetemplates/:id',
-    component: MessageTemplateEditComponent,
+    path: 'templates/:id',
+    component: TemplateEditComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messagetemplatemaps',
-    component:  MessageTemplateMapComponent,
+    path: 'mappings',
+    component:  MappingComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messagetemplatemaps/:id',
-    component: MessageTemplateMapEditComponent,
+    path: 'mappings/:id',
+    component: MappingEditComponent,
     canActivate: [OktaAuthGuard]
   },
    {
-     path: 'eventtemplates',
-    component: EventTemplateComponent,
+     path: 'routes',
+    component: RouteComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'eventtemplates/:id',
-   component: EventTemplateEditComponent,
+    path: 'routes/:id',
+   component: RouteEditComponent,
    canActivate: [OktaAuthGuard]
  },
   {
-    path: 'eventmessages',
-    component: EventMessageComponent,
+    path: 'queues',
+    component: QueueComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'eventmessages/:id',
-    component: EventMessageEditComponent,
+    path: 'queues/:id',
+    component: QueueComponent,
     canActivate: [OktaAuthGuard]
   },
    {
@@ -124,8 +123,8 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'appinfo',
-    component: AppInfoComponent,
+    path: 'settings',
+    component: SettingComponent,
     canActivate: [OktaAuthGuard]
   }
   

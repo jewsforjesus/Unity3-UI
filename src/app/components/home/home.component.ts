@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription, timer } from 'rxjs';
-import { StatusCountReport } from 'src/app/models/event-message.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { StatsService } from 'src/app/services/stats.service';
 import { environment } from 'src/environments/environment';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color,Label } from 'ng2-charts';
+import { StatusCountReport } from 'src/app/models/status-count-report.model';
 
 @Component({
   selector: 'app-home',
