@@ -8,6 +8,7 @@ import { MapTemplate, MessageTemplateMap } from 'src/app/models/message-template
 import { MessageTemplateMapService } from 'src/app/services/message-template-map.service';
 import { MessageTemplate } from 'src/app/models/message-template.model';
 import { MessageTemplateService } from 'src/app/services/message-template.service';
+import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 
 @Component({
   selector: 'app-message-template-map-edit',
@@ -18,6 +19,9 @@ export class MessageTemplateMapEditComponent implements OnInit {
   id: string;
   messageTemplateMap: MessageTemplateMap;
   templateId: string;
+
+  transformClassLookup: KeyValuePair[];
+  transformFunctionLookup: KeyValuePair[];
 
   messageTemplates: MessageTemplate[];
 
@@ -49,7 +53,10 @@ export class MessageTemplateMapEditComponent implements OnInit {
       description: [''],
       sourceMessageTemplateId: ['', [Validators.required]],
       targetMessageTemplateId: ['', [Validators.required]],
+      transformClassPath: [],
       clientScript: [''],
+      joinKeySource: [''],
+      joinKeyTarget:[''],
       mappings: this.formBuilder.array([]),
         
     });
@@ -100,6 +107,14 @@ export class MessageTemplateMapEditComponent implements OnInit {
   
   ngOnInit() {
 
+    this.messageTemplateMapService.loadClasses("Transform").subscribe(
+      result => {
+        this.transformClassLookup = result
+      }
+    );
+
+
+
     this.initalizeForm();
 
     
@@ -112,12 +127,12 @@ export class MessageTemplateMapEditComponent implements OnInit {
         switchMap(id => {
 
           if (id === 'new') {
-            this.formHeader = "New message template";
+            this.formHeader = "New mapping";
             this.messageTemplateMap = new MessageTemplateMap();
             return of(this.messageTemplateMap);
           }
 
-          this.formHeader = "Edit message template";
+          this.formHeader = "Edit mapping";
 
           return this.messageTemplateMapService.findById(id);
 
@@ -134,9 +149,10 @@ export class MessageTemplateMapEditComponent implements OnInit {
         this.f['description'].setValue(this.messageTemplateMap.description);
         this.f['sourceMessageTemplateId'].setValue(this.messageTemplateMap.sourceMessageTemplateId);
         this.f['targetMessageTemplateId'].setValue(this.messageTemplateMap.targetMessageTemplateId);
+        this.f['transformClassPath'].setValue(this.messageTemplateMap.transformClassPath);
         this.f['clientScript'].setValue(this.messageTemplateMap.clientScript);
-
-       
+        this.f['joinKeySource'].setValue(this.messageTemplateMap.joinKeySource);
+        this.f['joinKeyTarget'].setValue(this.messageTemplateMap.joinKeyTarget);
           
         if (data.mappings == null) {
           
@@ -147,6 +163,10 @@ export class MessageTemplateMapEditComponent implements OnInit {
 
           this.sourcePathLookup(this.messageTemplateMap.sourceMessageTemplateId);
           this.targetPathLookup(this.messageTemplateMap.targetMessageTemplateId);
+          this.loadTransformFunctionLookup(this.messageTemplateMap.transformClassPath);
+
+
+          //load mappings once lookps finish loading
 
           data.mappings.forEach(m => {
 
@@ -174,6 +194,7 @@ export class MessageTemplateMapEditComponent implements OnInit {
 
 
           });
+            
 
         }
       
@@ -210,6 +231,16 @@ export class MessageTemplateMapEditComponent implements OnInit {
       this.targetPath = null;
       this.targetPath = result;
     });
+  }
+
+  loadTransformFunctionLookup(className:string) {
+
+    this.messageTemplateMapService.loadMethods(className).subscribe(
+      result => {
+        this.transformFunctionLookup = result
+      }
+    );
+
   }
 
   refreshSourcePathList(id): void {

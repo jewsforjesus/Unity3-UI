@@ -12,14 +12,17 @@
         <li>Duration: {{eventMessage.duration || ''}}µs</li>
         <li>dequeueCount: {{eventMessage.dequeueCount || ''}}</li>
         <li>Status: {{eventMessage.status || ''}}</li>
-        <li>Description: {{eventMessage.statusDescription || ''}}</li>
+        <li>Description: {{eventMessage.description || ''}}</li>
       </ul>
 
       <form [formGroup]="eventMessageForm" (ngSubmit)="onSubmit()">
 
         <div class="form-group">
-          <select formControlName="eventId" class="form-control">
-            <option *ngFor="let event of eventLookup" [ngValue]="event.id">{{event.name}}</option>
+
+      <label class="form-check-label" for="route">Route</label>
+
+          <select id="route" formControlName="eventId" class="form-control">
+            <option *ngFor="let event of eventLookup" [ngValue]="event.key">{{event.value}}</option>
           </select>
           <div *ngIf="f.eventId.invalid && (f.eventId.dirty || f.eventId.touched)" class="alert alert-danger">
             <div *ngIf="f.eventId.errors.required">
@@ -29,7 +32,10 @@
         </div>
 
         <div class="form-group">
-          <textarea class="form-control" formControlName="message" placeholder="message" rows="10" ></textarea>
+
+      <label class="form-check-label" for="route">Message</label>
+
+          <textarea id="route" class="form-control" formControlName="message" placeholder="message" rows="10" ></textarea>
 
 
           <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)" class="alert alert-danger">

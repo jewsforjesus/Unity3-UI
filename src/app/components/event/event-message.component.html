@@ -1,4 +1,4 @@
-    <h2 class="title">Event Messages</h2>
+    <h2 class="title">Queues</h2>
 <div *ngIf="eventMessagesPageable != null">
   <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
   <div class="table-responsive">
@@ -26,16 +26,14 @@
         <thead>
           <tr>
             <th class="border-top-0" scope="col">Id</th>
-            <th class="border-top-0" scope="col">QueueName</th>
-            <th class="border-top-0" scope="col">EventId</th>
-            <th class="border-top-0" scope="col">Message</th>
+            <th class="border-top-0" scope="col">Name</th>
+            <th class="border-top-0" scope="col">Route</th>
             <th class="border-top-0" scope="col">Size</th>
-            <th class="border-top-0" scope="col">Start date</th>
-            <th class="border-top-0" scope="col">End date</th>
+            <th class="border-top-0" scope="col">Start Date</th>
+            <th class="border-top-0" scope="col">End Date</th>
             <th class="border-top-0" scope="col">Duration</th>
-            <th class="border-top-0" scope="col">dequeueCount</th>
             <th class="border-top-0" scope="col">Status</th>
-            <th class="border-top-0" scope="col">Description</th>
+            <th class="border-top-0" scope="col">Status Description</th>
             <th class="border-top-0" scope="col" style="width:120px"></th>
           </tr>
         </thead>
@@ -61,28 +59,25 @@
 
             </td>
             <td>
+              
+  <div class="form-group">
+    <input formControlName="status" placeholder="Type status to re-queue" class="form-control">
+  
+  
+    <div *ngIf="f.status.invalid && (f.status.dirty || f.status.touched)" class="alert alert-danger">
+  
+      <div *ngIf="f.status.errors.required">
+        Status to re-queue is required.
+      </div>
+    </div>
+  
+  </div>
+             
 
             </td>
             <td>
 
-            </td>
-            <td>
-
-                <div class="form-group">
-                  <input formControlName="status" placeholder="Type status to re-queue" class="form-control">
-                
-                
-                  <div *ngIf="f.status.invalid && (f.status.dirty || f.status.touched)" class="alert alert-danger">
-                
-                    <div *ngIf="f.status.errors.required">
-                      Status to re-queue is required.
-                    </div>
-                  </div>
-                
-                </div>
-
-            </td>
-            <td>
+               
             </td>
             <td style="white-space: nowrap">
               <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!reQueueForm.valid">Re-Queue</button>&nbsp;
@@ -95,27 +90,19 @@
             <td>{{item.id}}</td>
             <td>{{item.queueName}}</td>
             <td>{{item.eventName}}</td>
-            <td>{{item.message != null ? item.message.substring(0,50)+'...' : null}}</td>
             <td>{{item.size}}</td>
             <td>{{item.startDate | date:'medium':'GMT'}}</td>
 
             <td>{{item.endDate | date:'medium':'GMT'}}</td>
 
             <td>{{formatDuration(item.duration)}}</td>
-            <td>{{item.dequeueCount}}</td>
 
             <td>
 
-              <div *ngIf="item.status == 'DONE'; else nonErrorTemplate">
-                <span class="badge badge-secondary">{{item.status}}</span>
-              </div>
-
-              <ng-template #nonErrorTemplate>
                 {{item.status}}
-              </ng-template>
 
             </td>
-            <td>{{item.statusDescription}}</td>
+            <td>{{item.description}}</td>
             <td style="white-space: nowrap">
               <a *ngIf="item.traceInstanceId" [routerLink]="['/traces/instance', item.traceInstanceId ]"
                 class="btn btn-secondary btn-sm">Trace</a>&nbsp;

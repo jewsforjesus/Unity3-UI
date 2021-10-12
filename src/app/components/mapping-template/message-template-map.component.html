@@ -1,5 +1,5 @@
 
-    <h2 class="title">Message template maps</h2>
+    <h2 class="title">Mappings</h2>
 <div  *ngIf="messageTemplateMapsPageable != null">
   <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
   <div class="table-responsive">
@@ -13,10 +13,10 @@
           <th class="border-top-0" scope="col">Id</th>
           <th class="border-top-0" scope="col">Name</th>
           <th class="border-top-0" scope="col">Description</th>
-          <th class="border-top-0" scope="col">sourceMessageTemplate </th>
-          <th class="border-top-0" scope="col">targetMessageTemplate</th>
+          <th class="border-top-0" scope="col">Source Template</th>
+          <th class="border-top-0" scope="col">Target Template</th>
           <th class="border-top-0" scope="col" style="width:120px"><a [routerLink]="['../messagetemplatemaps', 'new' ]"
-              class="btn btn-secondary btn-sm">New template</a>&nbsp;
+              class="btn btn-secondary btn-sm">New mapping</a>&nbsp;
           </th>
         </tr>
       </thead>

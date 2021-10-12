@@ -1,5 +1,6 @@
 import { Audit } from './audit.model';
 import { Connector } from './connector.model';
+import { KeyValuePair } from './key-value-pair.model';
 
 export class EventTemplate extends Audit {
   id: string;
@@ -14,6 +15,10 @@ export class EventTemplate extends Audit {
   routeDefinition: any;
   queueName: string;
   route: any;
+  messageTemplateMapIds: string[];
+  connectorIds: string[];
+  routeClassPath: string;
+  chainedRoutes: string[];
 }
 
 

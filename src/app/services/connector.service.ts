@@ -5,6 +5,7 @@ import { File } from '../models/file.model';
 import { ApiBaseService } from './api-base.service';
 import { Connector } from '../models/connector.model';
 import { Page } from '../models/page.model';
+import { KeyValuePair } from '../models/key-value-pair.model';
 
 
 @Injectable()
@@ -35,11 +36,11 @@ export class ConnectorService  extends ApiBaseService {
     
   }
 
-  lookup(): Observable<Connector[]> {
+  lookup(): Observable<KeyValuePair[]> {
 
     const url = `${this.apiResource}/lookup`;
 
-    return this.http.get<Connector[]>(url, this.httpOptions);
+    return this.http.get<KeyValuePair[]>(url, this.httpOptions);
     
   }
 

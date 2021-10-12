@@ -1,4 +1,5 @@
 import { Audit } from './audit.model';
+import { KeyValuePair } from './key-value-pair.model';
 
 export class MessageTemplateMap extends Audit{
   id: string;
@@ -11,6 +12,9 @@ export class MessageTemplateMap extends Audit{
   targetMessageTemplateId: string;
   targetMessageTemplateName: string;
   clientScript: string;
+  transformClassPath: string;
+  joinKeySource: string;
+  joinKeyTarget: string;
   mappings: MapTemplate[];
 }
 

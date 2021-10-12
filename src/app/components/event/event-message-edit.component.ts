@@ -9,6 +9,7 @@ import { EventMessageService } from 'src/app/services/event-message.service';
 import { EventTemplateService } from 'src/app/services/event-template.service';
 import { EventMessage } from 'src/app/models/event-message.model';
 import { EventTemplate } from 'src/app/models/event-template.model';
+import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 
 @Component({
   selector: 'app-event-message-edit',
@@ -19,7 +20,7 @@ export class EventMessageEditComponent implements OnInit {
   id: string;
   feedback: any = null;
   eventMessage: EventMessage;
-  eventLookup: EventTemplate[];
+  eventLookup: KeyValuePair[];
   formHeader: string;
 
   eventMessageForm = new FormGroup({
@@ -73,11 +74,11 @@ export class EventMessageEditComponent implements OnInit {
       )
       .subscribe(message => {
           this.eventMessage = message;
-          this.feedback = null;
+        this.feedback = null;
 
           this.f['id'].setValue(this.eventMessage.id);
           this.f['eventId'].setValue(this.eventMessage.eventId);
-          this.f['message'].setValue(this.eventMessage.message);
+          this.f['message'].setValue(JSON.stringify(this.eventMessage.message));
 
         }
       );

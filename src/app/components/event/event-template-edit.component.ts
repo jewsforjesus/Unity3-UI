@@ -12,6 +12,8 @@ import { EventTemplate } from 'src/app/models/event-template.model';
 import { Connector } from 'src/app/models/connector.model';
 import { ConnectorService } from 'src/app/services/connector.service';
 import { TraceService } from 'src/app/services/trace.service';
+import { MessageTemplateMapService } from 'src/app/services/message-template-map.service';
+import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 
 @Component({
   selector: 'app-event-template-edit',
@@ -23,8 +25,12 @@ export class EventTemplateEditComponent implements OnInit {
   eventTemplate: EventTemplate;
   eventId: string;
 
-  connectorLookup: Connector[];
+  connectorLookup: KeyValuePair[];
   queueNameLookup: String[];
+
+  routeClassLookup: KeyValuePair[];
+  eventTemplateLookup: KeyValuePair[];
+  messageTemplateMapLookup: KeyValuePair[];
 
   formHeader: String;
 
@@ -38,12 +44,12 @@ export class EventTemplateEditComponent implements OnInit {
     private eventTemplateService: EventTemplateService,
     private connectorService: ConnectorService,
     private eventMessageService: EventMessageService,
-    private traceLogService: TraceService
+    private traceLogService: TraceService,
+    private messageTemplateMapService: MessageTemplateMapService
   ) {
   }
 
   get f() { return this.eventTemplateForm.controls; }
-
 
   initalizeForm() {
 
@@ -51,39 +57,64 @@ export class EventTemplateEditComponent implements OnInit {
       id: [null],
       name: [null, Validators.required],
       description: [null],
-      eventTemplateConnectors: this.formBuilder.array([
-        this.newEventTemplateConnectorForm()
-      ]),
-      message: [null, Validators.required],
       traceEnabled: [true],
       inactive: [false],
-      routeDefinition: [null, Validators.required],
       queueName: ['', Validators.required],
-      route: []
+      messageTemplateMapIds: this.formBuilder.array([
+        this.formBuilder.control([''])
+      ]),
+      connectorIds: this.formBuilder.array([
+        this.formBuilder.control([''])
+      ]),
+      routeClassPath: ['', Validators.required],
+      chainedRoutes: this.formBuilder.array([
+        this.formBuilder.control([''])
+      ])
     });
 
   }
 
-  eventTemplateConnectors(): FormArray {
-    return this.eventTemplateForm.get("eventTemplateConnectors") as FormArray
+  connectorIds(): FormArray{
+    return this.eventTemplateForm.get("connectorIds") as FormArray
   }
 
-  newEventTemplateConnectorForm(): FormGroup {
+  addConnectorId() {
+    this.connectorIds().push(this.formBuilder.control(['']));
+  }
+
+  removeConnectorId(index: number) {
+    this.connectorIds().removeAt(index);
+  }
+
+
+  chainedRoutes(): FormArray {
+    return this.eventTemplateForm.get("chainedRoutes") as FormArray
+  }
+
+  addChainedRoute() {
+    this.chainedRoutes().push(this.formBuilder.control(['']));
+  }
+
+  removeChainedRoute(index: number) {
+    this.chainedRoutes().removeAt(index);
+  }
+
+  messageTemplateMapIds(): FormArray {
+    return this.eventTemplateForm.get("messageTemplateMapIds") as FormArray
+  }
+
+  newMessageTemplateMapIdForm(): FormGroup {
     return this.formBuilder.group({
-      id: [''],
-      eventId: [''],
-      connectorId: [null, [Validators.required]],
-      className: ['', Validators.required],
-      primaryConnector: [false]
+      key: ['']
     })
   }
 
-  addEventTemplateConnector() {
-    this.eventTemplateConnectors().push(this.newEventTemplateConnectorForm());
+  addMessageTemplateMapId() {
+    this.messageTemplateMapIds().push(this.formBuilder.control(['']));
   }
 
-  removeEventTemplateConnector(index: number) {
-    this.eventTemplateConnectors().removeAt(index);
+  removeMessageTemplateMapId(index: number) {
+    this.messageTemplateMapIds().removeAt(index);
   }
 
 
@@ -104,6 +135,25 @@ export class EventTemplateEditComponent implements OnInit {
       }
     );
 
+    this.messageTemplateMapService.loadLookup().subscribe(
+      result => {
+        this.messageTemplateMapLookup = result
+      }
+    );
+
+    this.messageTemplateMapService.loadClasses("Route").subscribe(
+      result => {
+        this.routeClassLookup = result
+      }
+    );
+
+    this.eventTemplateService.lookup().subscribe(
+      result => {
+        this.eventTemplateLookup = result
+      }
+    );
+
+
     this
       .route
       .params
@@ -112,11 +162,11 @@ export class EventTemplateEditComponent implements OnInit {
         switchMap(id => {
 
           if (id === 'new') {
-            this.formHeader = "New event template";
+            this.formHeader = "New Route";
             return of(new EventTemplate());
           }
 
-          this.formHeader = "Edit event template";
+          this.formHeader = "Edit Route";
 
           return this.eventTemplateService.findById(id);
         })
@@ -129,28 +179,29 @@ export class EventTemplateEditComponent implements OnInit {
         this.f['id'].setValue(this.eventTemplate.id);
         this.f['name'].setValue(this.eventTemplate.name);
         this.f['description'].setValue(this.eventTemplate.description);
-
-        this.eventTemplateConnectors().clear();
-
-        this.eventTemplate.eventTemplateConnectors.forEach(element => {
-
-          let connector = this.formBuilder.group({
-            id: [element.id],
-            eventId: [element.eventId],
-            className: [element.className],
-            connectorId: [element.connectorId],
-            primaryConnector: [element.primaryConnector],
-          });
-
-          this.eventTemplateConnectors().push(connector);
-        });
-
-        this.f['message'].setValue(this.eventTemplate.message);
         this.f['queueName'].setValue(this.eventTemplate.queueName);
         this.f['traceEnabled'].setValue(this.eventTemplate.traceEnabled);
         this.f['inactive'].setValue(this.eventTemplate.inactive);
-        this.f['routeDefinition'].setValue(this.eventTemplate.routeDefinition);
-        this.f['route'].setValue(this.eventTemplate.route);
+
+        this.messageTemplateMapIds().clear();
+        this.eventTemplate.messageTemplateMapIds.forEach(element => {
+          this.messageTemplateMapIds().push(this.formBuilder.control(element));
+        });
+
+
+        this.connectorIds().clear();
+        this.eventTemplate.connectorIds.forEach(element => {
+          this.connectorIds().push(this.formBuilder.control(element));
+        });
+
+
+        this.chainedRoutes().clear();
+        this.eventTemplate.chainedRoutes.forEach(element => {
+          this.chainedRoutes().push(this.formBuilder.control(element));
+        });
+
+
+        this.f['routeClassPath'].setValue(this.eventTemplate.routeClassPath);
 
       }
       );
@@ -163,7 +214,9 @@ export class EventTemplateEditComponent implements OnInit {
 
 
   onSubmit() {
+   
     if (confirm('Are you sure?')) {
+
       this.eventTemplateService.save(this.eventTemplateForm.value).subscribe(
         result => {
           this.eventTemplate = result;
@@ -178,69 +231,10 @@ export class EventTemplateEditComponent implements OnInit {
           }, 1000);
         }
       );
-
-    }
-  }
-
-  delete(entity: EventTemplate): void {
-    if (confirm('Are you sure?')) {
-      this.eventTemplateService.delete(entity).subscribe(() => {
-        this.feedback = { type: 'success', message: 'Delete was successful!' };
-        setTimeout(() => {
-          this.load();
-          this.feedback = null;
-        }, 1000);
-      }
-      );
     }
   }
 
 
-  deleteTrace(entity: EventTemplate) {
-    if (confirm('Are you sure?')) {
-      this.traceLogService.deleteByEvent(this.eventId).subscribe(() => {
-        this.feedback = { type: 'success', message: 'Trace delete was successful!' };
-        setTimeout(() => {
-          this.load();
-        }, 1000);
-      }
-      );
-
-    }
-  }
-
-
-  setForEdit(eventTemplate: EventTemplate) {
-    if (confirm('Are you sure?')) {
-
-      this.f['id'].setValue(eventTemplate.id);
-      this.f['name'].setValue(eventTemplate.name);
-      this.f['description'].setValue(eventTemplate.description);
-
-      this.eventTemplateConnectors().clear();
-
-      eventTemplate.eventTemplateConnectors.forEach(element => {
-
-        let connector = this.formBuilder.group({
-          id: [element.id],
-          eventId: [element.eventId],
-          className: [element.className],
-          connectorId: [element.connectorId],
-          primaryConnector: [element.primaryConnector],
-        });
-
-        this.eventTemplateConnectors().push(connector);
-      });
-
-
-      this.f['message'].setValue(eventTemplate.message);
-      this.f['queueName'].setValue(eventTemplate.queueName);
-      this.f['traceEnabled'].setValue(eventTemplate.traceEnabled);
-      this.f['inactive'].setValue(eventTemplate.inactive);
-      this.f['routeDefinition'].setValue(eventTemplate.routeDefinition);
-
-    }
-  }
 
   clearForm() {
     this.eventTemplateForm.reset();

@@ -9,6 +9,7 @@ import { EventTemplateService } from 'src/app/services/event-template.service';
 import { Observable, Subscription, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/services/alert.service';
+import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 
 @Component({
   selector: 'app-event-message',
@@ -18,7 +19,7 @@ export class EventMessageComponent implements OnInit, OnDestroy {
 
   selectedEventMessage: EventMessage;
   eventMessage: EventMessage;
-  eventLookup: EventTemplate[];
+  eventLookup: KeyValuePair[];
 
   currentPage: number = 1;
 
@@ -121,9 +122,9 @@ ngOnDestroy() {
     if (confirm('Are you sure?')) {
 
 
-      const reQueueStatus = this.reQueueForm.get('status').value;
+      const status = this.reQueueForm.get('status').value;
 
-      this.eventMessageService.reQueue(reQueueStatus).subscribe(
+      this.eventMessageService.reQueue(status).subscribe(
         result => {
 
           this.eventMessageService.load(this.status, this.keyword, this.currentPage);

@@ -102,7 +102,7 @@ export class EventMessageService  extends ApiBaseService {
   reQueue(status: string): Observable<any> {
 
     const url = `${this.apiResource}/requeue/${status}`;
-    
+
     return this.http.put<any>(url, this.httpOptions);
 
   }

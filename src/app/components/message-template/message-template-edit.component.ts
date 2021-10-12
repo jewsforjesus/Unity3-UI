@@ -59,11 +59,11 @@ export class MessageTemplateEditComponent implements OnInit {
         switchMap(id => {
 
           if (id === 'new') {
-            this.formHeader = "New message template";
+            this.formHeader = "New template";
             return of(new MessageTemplate());
           }
 
-          this.formHeader = "Edit message template";
+          this.formHeader = "Edit template";
 
           return this.messageTemplateService.findById(id);
 

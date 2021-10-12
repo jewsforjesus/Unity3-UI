@@ -4,6 +4,7 @@ import { ApiBaseService } from './api-base.service';
 import { Page } from '../models/page.model';
 import { HttpParams } from '@angular/common/http';
 import { MessageTemplateMap } from '../models/message-template-map.model';
+import { KeyValuePair } from '../models/key-value-pair.model';
 
 
 @Injectable()
@@ -31,16 +32,21 @@ export class MessageTemplateMapService  extends ApiBaseService {
     
   }
 
-
-  loadClasses(): Observable<string[]> {
-    const url = `${this.apiResource}/classlist`;
-    return this.http.get<string[]>(url, this.httpOptions);
+  loadLookup(): Observable<KeyValuePair[]> {
+    const url = `${this.apiResource}/list/lookup`;
+    return this.http.get<KeyValuePair[]>(url, this.httpOptions);
   }
 
 
-  loadMethods(className:string): Observable<string[]> {
+  loadClasses(classType: string): Observable<KeyValuePair[]> {
+    const url = `${this.apiResource}/classlist/${classType}`;
+    return this.http.get<KeyValuePair[]>(url, this.httpOptions);
+  }
+
+
+  loadMethods(className: string): Observable<KeyValuePair[]> {
     const url = `${this.apiResource}/funclist/${className}`;
-    return this.http.get<string[]>(url, this.httpOptions);
+    return this.http.get<KeyValuePair[]>(url, this.httpOptions);
   }
 
   save(entity: MessageTemplateMap, isCreate: boolean): Observable<MessageTemplateMap> {

@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { ApiBaseService } from './api-base.service';
 import { EventTemplate } from '../models/event-template.model';
 import { Page } from '../models/page.model';
+import { KeyValuePair } from '../models/key-value-pair.model';
 
 @Injectable()
 export class EventTemplateService  extends ApiBaseService {
@@ -33,10 +34,10 @@ export class EventTemplateService  extends ApiBaseService {
 
   }
 
-  lookup(): Observable<EventTemplate[]> {
+  lookup(): Observable<KeyValuePair[]> {
 
     const url = `${this.apiResource}/lookup`;
-    return this.http.get<EventTemplate[]>(url, this.httpOptions);
+    return this.http.get<KeyValuePair[]>(url, this.httpOptions);
 
   }
 

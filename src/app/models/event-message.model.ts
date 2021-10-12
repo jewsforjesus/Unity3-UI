@@ -7,7 +7,7 @@ export class EventMessage extends Audit {
   eventName: string;
   message: string;
   status: string;
-  statusDescription: string;
+  description: string;
   startDate: Date;
   endDate: Date;
   size: number;

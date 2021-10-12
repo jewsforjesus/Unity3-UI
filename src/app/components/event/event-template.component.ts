@@ -10,6 +10,7 @@ import { EventTemplate } from 'src/app/models/event-template.model';
 import { ConnectorService } from 'src/app/services/connector.service';
 import { EventMessageService } from 'src/app/services/event-message.service';
 import { TraceService } from 'src/app/services/trace.service';
+import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 
 @Component({
   selector: 'app-event-template',
@@ -21,7 +22,7 @@ export class EventTemplateComponent implements OnInit {
   event: EventTemplate;
   eventId: string;
 
-  connectorLookup: Connector[];
+  connectorLookup: KeyValuePair[];
   queueNameLookup: String[];
 
   feedback: any = null;
