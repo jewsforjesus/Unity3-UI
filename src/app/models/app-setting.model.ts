@@ -1,4 +1,4 @@
-export class Setting {
+export class AppSetting {
    id: string;
    name: string; 
    settings: string[];  

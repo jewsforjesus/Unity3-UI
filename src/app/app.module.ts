@@ -27,19 +27,19 @@ import { ConnectorSettingComponent } from './components/connector/connector-sett
 import { ConnectorSettingService } from './services/connector-setting.service';
 import { LookupComponent } from './components/lookup/lookup.component';
 import { LookupService } from './services/lookup.service';
-import { SettingComponent } from './components/setting/setting.component';
-import { SettingService } from './services/setting.service';
+import { AppSettingComponent } from './components/setting/app-setting.component';
+import { AppSettingService } from './services/app-setting.service';
 import { TemplateComponent } from './components/template/template.component';
 import { TemplateEditComponent } from './components/template/template-edit.component';
 import { MappingComponent } from './components/mapping/mapping.component';
 import { MappingEditComponent } from './components/mapping/mapping-edit.component';
 import { MappingService } from './services/mapping.service';
-import { QueueComponent } from './components/queue/queue.component';
-import { QueueEditComponent } from './components/queue/queue-edit.component';
 import { RouteComponent } from './components/event/route.component';
 import { RouteEditComponent } from './components/event/route-edit.component';
 import { RouteService } from './services/route.service';
-import { QueueService } from './services/queue.service';
+import { QueueService } from './services/message.service';
+import { MessageComponent } from './components/message/message.component';
+import { MessageEditComponent } from './components/message/message-edit.component';
 
 @NgModule({
   declarations: [
@@ -52,13 +52,13 @@ import { QueueService } from './services/queue.service';
     TraceListComponent,
     LookupGroupComponent, 
     TemplateComponent,
-    SettingComponent,
+    AppSettingComponent,
     ConnectorSettingComponent,
     LookupComponent,
     MappingComponent,
     RouteComponent,
-    QueueComponent,
-    QueueEditComponent,
+    MessageComponent,
+    MessageEditComponent,
     RouteEditComponent,
     MappingEditComponent,
     TemplateEditComponent
@@ -79,7 +79,7 @@ import { QueueService } from './services/queue.service';
     TraceService,
     LookupGroupService,
     TemplateService,
-    SettingService,
+    AppSettingService,
     ConnectorSettingService,
     LookupService,
     MappingService,

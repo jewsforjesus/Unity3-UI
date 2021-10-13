@@ -9,7 +9,7 @@ export const environment = {
   issuer: "",
   redirectUri: "",
   clientId: "",
-  autoLoadInterval: 60000,
+  autoLoadInterval: 10000,
   scopes: []
 
 };

@@ -6,19 +6,19 @@ import { Observable, Subscription, timer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AlertService } from 'src/app/services/alert.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
-import { Queue } from 'src/app/models/queue.model';
+import { Message } from 'src/app/models/message.model';
 import { StatusCountReport } from 'src/app/models/status-count-report.model';
-import { QueueService } from 'src/app/services/queue.service';
+import { QueueService } from 'src/app/services/message.service';
 import { RouteService } from 'src/app/services/route.service';
 
 @Component({
-  selector: 'app-queue',
-  templateUrl: './queue.component.html'
+  selector: 'app-message',
+  templateUrl: './message.component.html'
 })
-export class QueueComponent implements OnInit, OnDestroy {
+export class MessageComponent implements OnInit, OnDestroy {
 
-  selectedEventMessage: Queue;
-  eventMessage: Queue;
+  selectedEventMessage: Message;
+  eventMessage: Message;
   eventLookup: KeyValuePair[];
 
   currentPage: number = 1;
@@ -40,7 +40,7 @@ ngOnDestroy() {
 
   feedback: any = null;
 
-  get eventMessagesPageable(): Page<Queue> {
+  get eventMessagesPageable(): Page<Message> {
     return this.eventMessageService.eventMessagePageable;
   }
 
@@ -142,6 +142,21 @@ ngOnDestroy() {
     this.reQueueForm.reset();
   }
 
+  isErrorStatus(status) {
+
+    if (status.indexOf(":") > 0) {
+      status = "ERROR"
+    }
+    
+    if (status == "ERROR") {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
+
   formatDuration(duration: any) : string {
     
     var milliseconds = Math.floor((duration % 1000) / 100),
@@ -157,7 +172,7 @@ ngOnDestroy() {
 
   }
 
-  delete(entity: Queue): void {
+  delete(entity: Message): void {
     if (confirm('Are you sure?')) {
       this.eventMessageService.delete(entity).subscribe(() => {
           this.feedback = {type: 'success', message: 'Delete was successful!'};

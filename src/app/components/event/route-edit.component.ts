@@ -9,7 +9,7 @@ import { ConnectorService } from 'src/app/services/connector.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { MappingService } from 'src/app/services/mapping.service';
 import { RouteService } from 'src/app/services/route.service';
-import { QueueService } from 'src/app/services/queue.service';
+import { QueueService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-route-edit',

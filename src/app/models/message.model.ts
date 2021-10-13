@@ -1,6 +1,6 @@
 import { Audit } from "./audit.model";
 
-export class Queue extends Audit {
+export class Message extends Audit {
   id: string;
   queueName: string;
   eventId: string;

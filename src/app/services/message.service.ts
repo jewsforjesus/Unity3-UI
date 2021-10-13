@@ -3,22 +3,22 @@ import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiBaseService } from './api-base.service';
 import { Page } from '../models/page.model';
-import { Queue } from '../models/queue.model';
+import { Message } from '../models/message.model';
 import { StatusCountReport } from '../models/status-count-report.model';
 
 
 @Injectable()
 export class QueueService  extends ApiBaseService {
 
-  eventMessagePageable: Page<Queue>;
+  eventMessagePageable: Page<Message>;
 
-  private apiResource = this.apiURL.concat("queues");
+  private apiResource = this.apiURL.concat("messages");
 
-  findById(id: string): Observable<Queue> {
+  findById(id: string): Observable<Message> {
 
     const url = `${this.apiResource}/${id}`;
 
-    let result = this.http.get<Queue>(url, this.httpOptions);
+    let result = this.http.get<Message>(url, this.httpOptions);
 
     return result;
   }
@@ -49,7 +49,7 @@ export class QueueService  extends ApiBaseService {
       url = `${this.apiResource}/list/${page}`;
     }
 
-    this.http.get<Page<Queue>>(url, this.httpOptions).subscribe(result => {
+    this.http.get<Page<Message>>(url, this.httpOptions).subscribe(result => {
 
       this.eventMessagePageable = result;
 
@@ -73,7 +73,7 @@ export class QueueService  extends ApiBaseService {
   }
 
 
-  save(entity: Queue, isCreate: Boolean): Observable<Queue> {
+  save(entity: Message, isCreate: Boolean): Observable<Message> {
 
     let params = new HttpParams();
 
@@ -81,20 +81,20 @@ export class QueueService  extends ApiBaseService {
 
     if (isCreate){
       entity.id = null;
-      return this.http.post<Queue>(url, entity);
+      return this.http.post<Message>(url, entity);
     }
     else
-      return this.http.put<Queue>(url, entity);
+      return this.http.put<Message>(url, entity);
 
   }
 
 
 
-  delete(entity: Queue): Observable<Queue> {
+  delete(entity: Message): Observable<Message> {
     let url = '';
     if (entity.id) {
       url = `${this.apiResource}/${entity.id.toString()}`;
-      return this.http.delete<Queue>(url, this.httpOptions);
+      return this.http.delete<Message>(url, this.httpOptions);
     }
     return null;
   }

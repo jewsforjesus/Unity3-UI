@@ -9,7 +9,7 @@ import { TraceService } from 'src/app/services/trace.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { Route } from 'src/app/models/route.model';
 import { RouteService } from 'src/app/services/route.service';
-import { QueueService } from 'src/app/services/queue.service';
+import { QueueService } from 'src/app/services/message.service';
 
 @Component({
   selector: 'app-route',

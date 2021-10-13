@@ -16,12 +16,13 @@ import { ConnectorSettingComponent } from './components/connector/connector-sett
 import { LookupComponent } from './components/lookup/lookup.component';
 import {  RouteComponent } from './components/event/route.component';
 import { RouteEditComponent } from './components/event/route-edit.component';
-import { SettingComponent } from './components/setting/setting.component';
+import { AppSettingComponent } from './components/setting/app-setting.component';
 import { TemplateComponent } from './components/template/template.component';
 import { TemplateEditComponent } from './components/template/template-edit.component';
 import { MappingComponent } from './components/mapping/mapping.component';
 import { MappingEditComponent } from './components/mapping/mapping-edit.component';
-import { QueueComponent } from './components/queue/queue.component';
+import { MessageComponent } from './components/message/message.component';
+import { MessageEditComponent } from './components/message/message-edit.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -93,13 +94,13 @@ const routes: Routes = [
    canActivate: [OktaAuthGuard]
  },
   {
-    path: 'queues',
-    component: QueueComponent,
+    path: 'messages',
+    component: MessageComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'queues/:id',
-    component: QueueComponent,
+    path: 'messages/:id',
+    component: MessageEditComponent,
     canActivate: [OktaAuthGuard]
   },
    {
@@ -123,8 +124,8 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'settings',
-    component: SettingComponent,
+    path: 'appsettings',
+    component: AppSettingComponent,
     canActivate: [OktaAuthGuard]
   }
   

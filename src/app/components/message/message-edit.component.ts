@@ -5,20 +5,20 @@ import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
-import { Queue } from 'src/app/models/queue.model';
+import { Message } from 'src/app/models/message.model';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
-import { QueueService } from 'src/app/services/queue.service';
+import { QueueService } from 'src/app/services/message.service';
 import { RouteService } from 'src/app/services/route.service';
 
 @Component({
-  selector: 'app-queue-edit',
-  templateUrl: './queue-edit.component.html'
+  selector: 'app-message-edit',
+  templateUrl: './message-edit.component.html'
 })
-export class QueueEditComponent implements OnInit {
+export class MessageEditComponent implements OnInit {
 
   id: string;
   feedback: any = null;
-  eventMessage: Queue;
+  eventMessage: Message;
   eventLookup: KeyValuePair[];
   formHeader: string;
 
@@ -63,7 +63,7 @@ export class QueueEditComponent implements OnInit {
           
           if (id === 'new') { 
             this.formHeader = "New message";
-            return of(new Queue());
+            return of(new Message());
           }
 
           this.formHeader = "Edit message";
@@ -104,7 +104,7 @@ export class QueueEditComponent implements OnInit {
           //this.load();
           setTimeout(() => {
             this.feedback = null;
-            this.router.navigate(['/queues']);
+            this.router.navigate(['/messages']);
           }, 1000);
         }
       );
@@ -113,6 +113,6 @@ export class QueueEditComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/queues']);
+    this.router.navigate(['/messages']);
   }
 }
