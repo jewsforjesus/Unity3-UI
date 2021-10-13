@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription, timer } from 'rxjs';
-import { StatusCountReport } from 'src/app/models/event-message.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { StatsService } from 'src/app/services/stats.service';
 import { environment } from 'src/environments/environment';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color,Label } from 'ng2-charts';
+import { StatusCountReport } from 'src/app/models/status-count-report.model';
 
 @Component({
   selector: 'app-home',
@@ -110,20 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy  {
             data.push(this.findVal(row, col));
           }
 
-
-          let borderColor;
-
-          if (label == "DONE") {
-            borderColor = "#2fb3f5";
-          }
-          else if (label.startsWith("ERROR")) {
-            borderColor = "#f55858";
-          }
-          else {
-            borderColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-          }
-
-          let dataSet = { data: data, label: label, fill: false, borderColor: borderColor};
+          let dataSet = { data: data, label: label};
 
           this.chartData.push( dataSet);
 
