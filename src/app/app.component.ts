@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { OktaAuthService } from '@okta/okta-angular';
 
 import { Subject } from 'rxjs';
-import { AppInfoService } from 'src/app/services/app-info.service';
 import { LoaderService } from './services/loader.service';
+import { AppSettingService } from './services/app-setting.service';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   isLoading: Subject<boolean> = this.loaderService.isLoading;
 
-  constructor(public oktaAuth: OktaAuthService, private loaderService: LoaderService, private appInfoService: AppInfoService) {
+  constructor(public oktaAuth: OktaAuthService, private loaderService: LoaderService, private settingsService: AppSettingService) {
 
   }
 
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
 
   loadAppName() {
     
-    this.appInfoService.load().subscribe(result => {
+    this.settingsService.load().subscribe(result => {
       this.title = result.name;
     }
     );

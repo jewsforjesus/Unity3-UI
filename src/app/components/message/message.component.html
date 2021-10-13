@@ -1,0 +1,134 @@
+<h2 class="title">Messages</h2>
+<div *ngIf="eventMessagesPageable != null">
+  <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <div class="table-responsive">
+
+    <ul>
+      <li *ngFor="let item of statusCountReport">{{item.status}}: {{item.statusCount}}</li>
+    </ul>
+
+    <input type="text" class="form-control" id="txtStatus" placeholder="Search by status" [(ngModel)]="status">
+    <input type="text" class="form-control" id="txtKeyword" placeholder="Search by keyword" [(ngModel)]="keyword">
+
+    <button type="button" (click)="search()" class="btn btn-secondary btn-sm">Search</button>&nbsp;
+    <button type="button" (click)="clearSearch()" class="btn btn-secondary btn-sm">Clear</button>&nbsp;
+
+    <ngb-pagination [(collectionSize)]="eventMessagesPageable.totalElements" [(page)]="currentPage"
+      [pageSize]=eventMessagesPageable.size [maxSize]="eventMessagesPageable.numberOfElements" [rotate]="true"
+      [ellipses]="false" [boundaryLinks]="true" (pageChange)="loadPage($event)" size="sm"
+      [disabled]='eventMessagesPageable.totalElements < eventMessagesPageable.numberOfElements'>
+    </ngb-pagination>
+
+    Total: {{eventMessagesPageable.totalElements}} Current:{{eventMessagesPageable.numberOfElements}}
+
+    <form *ngIf="eventMessagesPageable" [formGroup]="reQueueForm" (ngSubmit)="onReQueueSubmit()">
+
+      <table class="table table-striped  table-sm">
+        <thead>
+          <tr>
+            <th class="border-top-0" scope="col">Id</th>
+            <th class="border-top-0" scope="col">Name</th>
+            <th class="border-top-0" scope="col">Route</th>
+            <th class="border-top-0" scope="col">Size</th>
+            <th class="border-top-0" scope="col">Start Date</th>
+            <th class="border-top-0" scope="col">End Date</th>
+            <th class="border-top-0" scope="col">Duration</th>
+            <th class="border-top-0" scope="col">Status</th>
+            <th class="border-top-0" scope="col">Status Description</th>
+            <th class="border-top-0" scope="col" style="width:120px">
+              <a [routerLink]="['../messages', 'new' ]" class="btn btn-secondary btn-sm">New queue</a>&nbsp;
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+
+              <div class="form-group">
+                <input formControlName="status" placeholder="Type status to re-queue" class="form-control">
+
+
+                <div *ngIf="f.status.invalid && (f.status.dirty || f.status.touched)" class="alert alert-danger">
+
+                  <div *ngIf="f.status.errors.required">
+                    Status to re-queue is required.
+                  </div>
+                </div>
+
+              </div>
+
+
+            </td>
+            <td>
+
+
+            </td>
+            <td style="white-space: nowrap">
+              <button type="submit" class="btn btn-secondary btn-sm"
+                [disabled]="!reQueueForm.valid">Re-Queue</button>&nbsp;
+              <button type="button" class="btn btn-secondary btn-sm" (click)="clearReQueueForm()">Clear</button>&nbsp;
+            </td>
+          </tr>
+
+          <tr *ngFor="let item of eventMessagesPageable.content">
+
+            <td>{{item.id}}</td>
+            <td>{{item.queueName}}</td>
+            <td>{{item.eventName}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.startDate | date:'medium':'GMT'}}</td>
+
+            <td>{{item.endDate | date:'medium':'GMT'}}</td>
+
+            <td>{{formatDuration(item.duration)}}</td>
+
+            <td>
+
+              <div *ngIf="isErrorStatus(item.status); then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <span class="badge badge-danger">{{item.status}}</span>
+              </ng-template>
+              <ng-template #elseBlock>
+                {{item.status}}
+              </ng-template>
+
+
+            </td>
+            <td>
+              {{item.description}}
+            </td>
+            <td style="white-space: nowrap">
+              <a *ngIf="item.traceInstanceId" [routerLink]="['/traces/instance', item.traceInstanceId ]"
+                class="btn btn-secondary btn-sm">Trace</a>&nbsp;
+              <a *ngIf="item.traceInstanceId" [routerLink]="['/messages/', item.id ]"
+                class="btn btn-secondary btn-sm">Edit</a>&nbsp;
+              <button [disabled]="item.status == 'QUEUED' || item.status == 'PROCESSING' " type="button"
+                (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </form>
+
+  </div>
+</div>

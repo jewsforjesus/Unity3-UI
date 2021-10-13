@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { File } from '../models/file.model';
+import { HttpParams } from '@angular/common/http';
 import { ApiBaseService } from './api-base.service';
-import { Connector, ConnectorSetting } from '../models/connector.model';
+import { ConnectorSetting } from '../models/connector.model';
 import { Page } from '../models/page.model';
 
 
