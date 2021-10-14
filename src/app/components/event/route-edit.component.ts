@@ -179,22 +179,25 @@ export class RouteEditComponent implements OnInit {
         this.f['inactive'].setValue(this.eventTemplate.inactive);
 
         this.messageTemplateMapIds().clear();
-        this.eventTemplate.messageTemplateMapIds.forEach(element => {
-          this.messageTemplateMapIds().push(this.formBuilder.control(element));
-        });
-
+        if (this.eventTemplate.messageTemplateMapIds) {
+          this.eventTemplate.messageTemplateMapIds.forEach(element => {
+            this.messageTemplateMapIds().push(this.formBuilder.control(element));
+          });
+        }
 
         this.connectorIds().clear();
-        this.eventTemplate.connectorIds.forEach(element => {
-          this.connectorIds().push(this.formBuilder.control(element));
-        });
-
+        if (this.eventTemplate.connectorIds) {
+          this.eventTemplate.connectorIds.forEach(element => {
+            this.connectorIds().push(this.formBuilder.control(element));
+          });
+        }
 
         this.chainedRoutes().clear();
-        this.eventTemplate.chainedRoutes.forEach(element => {
-          this.chainedRoutes().push(this.formBuilder.control(element));
-        });
-
+        if (this.eventTemplate.chainedRoutes) {
+          this.eventTemplate.chainedRoutes.forEach(element => {
+            this.chainedRoutes().push(this.formBuilder.control(element));
+          });
+        }
 
         this.f['routeClassPath'].setValue(this.eventTemplate.routeClassPath);
 

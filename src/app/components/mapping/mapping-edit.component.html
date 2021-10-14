@@ -63,7 +63,7 @@
 
     <div class="form-group">
       <label class="form-check-label" for="transformClassPath">Transform Class</label>
-      <select id="transformClassPath" formControlName="transformClassPath" class="form-control">
+      <select *ngIf="transformClassLookup?.length > 0" id="transformClassPath" formControlName="transformClassPath" class="form-control">
         <option *ngFor="let item of transformClassLookup" [ngValue]="item.key">{{item.value}}</option>
       </select>
     </div>
@@ -75,7 +75,7 @@
 
           <label class="form-check-label" for="joinKeySource">Source join key</label>
 
-          <select id="joinKeySource" formControlName="joinKeySource" class="form-control">
+          <select *ngIf="sourcePath?.length > 0" id="joinKeySource" formControlName="joinKeySource" class="form-control">
             <option *ngFor="let path of sourcePath" [ngValue]="path">{{path}}</option>
           </select>
 
@@ -85,7 +85,7 @@
 
           <label class="form-check-label" for="joinKeyTarget">Target join key</label>
 
-          <select id="joinKeyTarget" formControlName="joinKeyTarget" class="form-control">
+          <select *ngIf="targetPath?.length > 0" id="joinKeyTarget" formControlName="joinKeyTarget" class="form-control">
             <option *ngFor="let path of targetPath" [ngValue]="path">{{path}}</option>
           </select>
 
@@ -98,79 +98,150 @@
 
 
 
-    <div *ngIf="sourcePath && targetPath && messageTemplateMap" formArrayName="mappings">
+
+    <div *ngIf="sourcePath?.length > 0 && targetPath?.length > 0 && transformFunctionLookup?.length > 0"
+      formArrayName="mappings">
+
       <table class="table table-striped table-sm">
 
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Sources</th>
+            <th scope="col">Client function</th>
+            <th scope="col">Function</th>
+            <th scope="col">Target</th>
+            <th scope="col">Inactive?</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
         <tbody>
           <tr *ngFor="let mapping of mappings().controls; let mappingIndex=index">
 
             <td>
               <div [formGroupName]="mappingIndex">
 
-            <td>
-              <div formArrayName="sources">
 
 
-                <div *ngFor="let source of mappingSources(mappingIndex).controls; let sourceIndex=index">
 
-                  <div [formGroupName]="sourceIndex" class="form-inline">
 
-                    <select formControlName="source" class="form-control">
-                      <option *ngFor="let path of sourcePath" [ngValue]="path">{{path}}</option>
+
+
+                <ng-template #content let-modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="modal-basic-title">Edit mapping</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+
+
+
+
+                    <div formArrayName="sources">
+
+                      <div *ngFor="let source of mappingSources(mappingIndex).controls; let sourceIndex=index">
+
+                        <div [formGroupName]="sourceIndex" class="form-inline">
+
+                          <select formControlName="source" class="form-control">
+                            <option *ngFor="let path of sourcePath" [ngValue]="path">{{path}}</option>
+                          </select>
+
+                          <button type="button" (click)="removeMappingSource(mappingIndex, sourceIndex)"
+                            class="btn btn-danger btn-sm">Remove Source</button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+
+                    <button type="button" (click)="addMappingSource(mappingIndex)" class="btn btn-secondary btn-sm">Add
+                      Source</button>
+
+                    <input formControlName="client_function" placeholder="client_function" class="form-control">
+
+                    <select formControlName="function" class="form-control">
+                      <option value=null></option>
+                      <option *ngFor="let function of transformFunctionLookup" [ngValue]="function.key">
+                        {{function.value}}
+                      </option>
                     </select>
 
-                    <button type="button" (click)="removeMappingSource(mappingIndex, sourceIndex)"
-                      class="btn btn-danger btn-sm">Remove Source</button>
+
+
+                    <select formControlName="target" class="form-control">
+                      <option *ngFor="let path of targetPath" [ngValue]="path">{{path}}</option>
+                    </select>
+
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" formControlName="inactive" title="Inactive?">
+                    </div>
+
+
 
                   </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Update</button>
+                  </div>
+                </ng-template>
+
+
+
+                <div>
+
+                </div>
+                <div>
 
                 </div>
 
-              </div>
 
 
-              <button type="button" (click)="addMappingSource(mappingIndex)" class="btn btn-secondary btn-sm">Add
-                Source</button>
 
-            </td>
-
-            <td><input formControlName="client_function" placeholder="client_function" class="form-control"></td>
-            <td>
-
-              <select formControlName="function" class="form-control">
-                <option *ngFor="let function of transformFunctionLookup" [ngValue]="function.key">{{function.value}}
-                </option>
-              </select>
-
-            </td>
-            <td>
-
-              <select formControlName="target" class="form-control">
-                <option *ngFor="let path of targetPath" [ngValue]="path">{{path}}</option>
-              </select>
-
-            </td>
-            <td>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" formControlName="inactive" title="Inactive?">
               </div>
             </td>
+            <td>
+              <ul class="m-0">
+                <li *ngFor="let source of mappingSources(mappingIndex).controls; let sourceIndex=index">
+                  {{source.controls.source.value}}</li>
+              </ul>
+            </td>
+            <td>
+              {{mapping.controls.client_function.value}}
+            </td>
+            <td>
+              {{mapping.controls.function.value}}
+            </td>
+            <td>
+              {{mapping.controls.target.value}}
+            </td>
+            <td>
+              {{mapping.controls.inactive.value}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="open(content)">Edit</button>
+
+            </td>
+            <td>
+              <button type="button" (click)="removeMapping(mappingIndex)" class="btn btn-danger btn-sm">X</button>
+            </td>
 
 
-            <td><button type="button" (click)="removeMapping(mappingIndex)" class="btn btn-danger btn-sm">Remove
-                Mapping</button></td>
+          </tr>
+        </tbody>
+      </table>
 
+      <button type="button" (click)="addMapping()" class="btn btn-secondary btn-sm">Add Mapping</button>
 
     </div>
 
-    </td>
-    </tr>
-    </tbody>
-    </table>
 
-    <button type="button" (click)="addMapping()" class="btn btn-secondary btn-sm">Add Mapping</button>&nbsp;
-
-</div>
+ 
 
 <div>
   <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateMapForm.valid">Save</button>&nbsp;

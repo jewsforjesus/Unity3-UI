@@ -9,6 +9,7 @@ import { Template } from 'src/app/models/template.model';
 import { TemplateService } from 'src/app/services/template.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { MappingService } from 'src/app/services/mapping.service';
+import { NgbActiveModal, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'mapping-edit',
@@ -38,7 +39,8 @@ export class MappingEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private messageTemplateMapService: MappingService,
-    private messageTemplateService: TemplateService
+    private messageTemplateService: TemplateService,
+    private modalService: NgbModal
   ) {
   }
 
@@ -260,6 +262,25 @@ export class MappingEditComponent implements OnInit {
 
   }
 
+  closeResult = '';
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   onSubmit() {
 
