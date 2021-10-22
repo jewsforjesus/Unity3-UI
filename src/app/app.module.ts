@@ -34,8 +34,8 @@ import { TemplateEditComponent } from './components/template/template-edit.compo
 import { MappingComponent } from './components/mapping/mapping.component';
 import { MappingEditComponent } from './components/mapping/mapping-edit.component';
 import { MappingService } from './services/mapping.service';
-import { RouteComponent } from './components/event/route.component';
-import { RouteEditComponent } from './components/event/route-edit.component';
+import { RouteComponent } from './components/route/route.component';
+import { RouteEditComponent } from './components/route/route-edit.component';
 import { RouteService } from './services/route.service';
 import { QueueService } from './services/message.service';
 import { MessageComponent } from './components/message/message.component';

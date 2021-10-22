@@ -63,7 +63,8 @@
 
     <div class="form-group">
       <label class="form-check-label" for="transformClassPath">Transform Class</label>
-      <select *ngIf="transformClassLookup?.length > 0" id="transformClassPath" formControlName="transformClassPath" class="form-control">
+      <select *ngIf="transformClassLookup?.length > 0" id="transformClassPath" formControlName="transformClassPath"
+        class="form-control">
         <option *ngFor="let item of transformClassLookup" [ngValue]="item.key">{{item.value}}</option>
       </select>
     </div>
@@ -75,7 +76,8 @@
 
           <label class="form-check-label" for="joinKeySource">Source join key</label>
 
-          <select *ngIf="sourcePath?.length > 0" id="joinKeySource" formControlName="joinKeySource" class="form-control">
+          <select *ngIf="sourcePath?.length > 0" id="joinKeySource" formControlName="joinKeySource"
+            class="form-control">
             <option *ngFor="let path of sourcePath" [ngValue]="path">{{path}}</option>
           </select>
 
@@ -85,7 +87,8 @@
 
           <label class="form-check-label" for="joinKeyTarget">Target join key</label>
 
-          <select *ngIf="targetPath?.length > 0" id="joinKeyTarget" formControlName="joinKeyTarget" class="form-control">
+          <select *ngIf="targetPath?.length > 0" id="joinKeyTarget" formControlName="joinKeyTarget"
+            class="form-control">
             <option *ngFor="let path of targetPath" [ngValue]="path">{{path}}</option>
           </select>
 
@@ -187,7 +190,8 @@
 
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Update</button>
+                    <button type="button" class="btn btn-outline-dark"
+                      (click)="modal.close('Save click')">Update</button>
                   </div>
                 </ng-template>
 
@@ -236,17 +240,20 @@
         </tbody>
       </table>
 
-      <button type="button" (click)="addMapping()" class="btn btn-secondary btn-sm">Add Mapping</button>
+      <div class="form-group">
+        <button type="button" (click)="addMapping()" class="btn btn-secondary btn-sm">Add Mapping</button>
+      </div>
 
     </div>
 
 
- 
 
-<div>
-  <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateMapForm.valid">Save</button>&nbsp;
-  <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
-</div>
-</form>
+
+    <div>
+      <button type="submit" class="btn btn-secondary btn-sm"
+        [disabled]="!messageTemplateMapForm.valid">Save</button>&nbsp;
+      <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
 
 </div>
