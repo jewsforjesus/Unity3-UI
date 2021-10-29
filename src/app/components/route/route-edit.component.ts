@@ -64,7 +64,8 @@ export class RouteEditComponent implements OnInit {
       routeClassPath: ['', Validators.required],
       chainedRoutes: this.formBuilder.array([
         this.formBuilder.control([''])
-      ])
+      ]),
+      routeXML: [null]
     });
 
   }
@@ -200,6 +201,7 @@ export class RouteEditComponent implements OnInit {
         }
 
         this.f['routeClassPath'].setValue(this.eventTemplate.routeClassPath);
+        this.f['routeXML'].setValue(this.eventTemplate.routeXML);
 
       }
       );

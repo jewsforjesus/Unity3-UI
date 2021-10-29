@@ -18,5 +18,6 @@ export class Route extends Audit {
   connectorIds: string[];
   routeClassPath: string;
   chainedRoutes: string[];
+  routeXML: string;
 }
 
