@@ -19,7 +19,7 @@ export class ConnectorSettingComponent implements OnInit {
   connectorSetting: ConnectorSetting;
   feedback: any = null;
   connectorId: string ;
-  profiles: String[] = ['ALL', 'LOCAL', 'DEV', 'PROD'];
+  profiles: String[] = ['ALL', 'LOCAL', 'DEV', 'STAGE', 'PROD'];
 
   connectorSettingForm = new FormGroup({
     id: new FormControl(''),
