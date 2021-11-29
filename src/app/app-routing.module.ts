@@ -23,6 +23,8 @@ import { MappingComponent } from './components/mapping/mapping.component';
 import { MappingEditComponent } from './components/mapping/mapping-edit.component';
 import { MessageComponent } from './components/message/message.component';
 import { MessageEditComponent } from './components/message/message-edit.component';
+import { ScriptComponent } from './components/script/script.component';
+import { ScriptEditComponent } from './components/script/script-edit.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -71,6 +73,16 @@ const routes: Routes = [
   {
     path: 'templates/:id',
     component: TemplateEditComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
+    path: 'scripts',
+    component:  ScriptComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
+    path: 'scripts/:id',
+    component: ScriptEditComponent,
     canActivate: [OktaAuthGuard]
   },
   {

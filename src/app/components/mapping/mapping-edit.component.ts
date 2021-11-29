@@ -10,6 +10,7 @@ import { TemplateService } from 'src/app/services/template.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { MappingService } from 'src/app/services/mapping.service';
 import { NgbActiveModal, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ScriptService } from 'src/app/services/script.service';
 
 @Component({
   selector: 'mapping-edit',
@@ -23,6 +24,8 @@ export class MappingEditComponent implements OnInit {
 
   transformClassLookup: KeyValuePair[];
   transformFunctionLookup: KeyValuePair[];
+
+  transformScriptLookup: KeyValuePair[];
 
   messageTemplates: Template[];
 
@@ -40,7 +43,8 @@ export class MappingEditComponent implements OnInit {
     private router: Router,
     private messageTemplateMapService: MappingService,
     private messageTemplateService: TemplateService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private scriptService: ScriptService
   ) {
   }
 
@@ -56,7 +60,7 @@ export class MappingEditComponent implements OnInit {
       sourceMessageTemplateId: ['', [Validators.required]],
       targetMessageTemplateId: ['', [Validators.required]],
       transformClassPath: [],
-      clientScript: [''],
+      transformScriptId: [null],
       joinKeySource: [''],
       joinKeyTarget:[''],
       mappings: this.formBuilder.array([]),
@@ -151,8 +155,8 @@ export class MappingEditComponent implements OnInit {
         this.f['description'].setValue(this.messageTemplateMap.description);
         this.f['sourceMessageTemplateId'].setValue(this.messageTemplateMap.sourceMessageTemplateId);
         this.f['targetMessageTemplateId'].setValue(this.messageTemplateMap.targetMessageTemplateId);
+        this.f['transformScriptId'].setValue(this.messageTemplateMap.transformScriptId);
         this.f['transformClassPath'].setValue(this.messageTemplateMap.transformClassPath);
-        this.f['clientScript'].setValue(this.messageTemplateMap.clientScript);
         this.f['joinKeySource'].setValue(this.messageTemplateMap.joinKeySource);
         this.f['joinKeyTarget'].setValue(this.messageTemplateMap.joinKeyTarget);
           
@@ -206,12 +210,20 @@ export class MappingEditComponent implements OnInit {
     
     this.loadMessageTemplateLookup();
 
+    this.loadTransformScriptLookup();
+
 
   }
 
 
   load(): void {
     this.messageTemplateMapService.load();
+  }
+
+  loadTransformScriptLookup(): void {
+    this.scriptService.lookup().subscribe(result => {
+      this.transformScriptLookup = result;
+    });
   }
 
   loadMessageTemplateLookup(): void {

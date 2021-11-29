@@ -56,8 +56,14 @@
     </div>
 
     <div class="form-group">
-      <label class="form-check-label" for="clientScript">Client Script</label>
-      <textarea id="clientScript" formControlName="clientScript" class="form-control" rows="5"></textarea>
+
+      <label class="form-check-label" for="transformScriptId">Transform Script</label>
+      <select *ngIf="transformClassLookup?.length > 0" id="transformScriptId" formControlName="transformScriptId"
+        class="form-control">
+        <option value=null></option>
+        <option *ngFor="let item of transformScriptLookup" [ngValue]="item.key">{{item.value}}</option>
+      </select>
+
     </div>
 
 

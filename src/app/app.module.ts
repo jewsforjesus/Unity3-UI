@@ -40,6 +40,11 @@ import { RouteService } from './services/route.service';
 import { QueueService } from './services/message.service';
 import { MessageComponent } from './components/message/message.component';
 import { MessageEditComponent } from './components/message/message-edit.component';
+import { ScriptComponent } from './components/script/script.component';
+import { ScriptService } from './services/script.service';
+import { ScriptEditComponent } from './components/script/script-edit.component';
+
+
 
 @NgModule({
   declarations: [
@@ -61,7 +66,9 @@ import { MessageEditComponent } from './components/message/message-edit.componen
     MessageEditComponent,
     RouteEditComponent,
     MappingEditComponent,
-    TemplateEditComponent
+    TemplateEditComponent,
+    ScriptComponent,
+    ScriptEditComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +92,7 @@ import { MessageEditComponent } from './components/message/message-edit.componen
     MappingService,
     RouteService,
     QueueService,
+    ScriptService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService}],

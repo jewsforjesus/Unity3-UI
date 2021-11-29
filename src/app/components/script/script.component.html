@@ -1,0 +1,33 @@
+
+    <h2 class="title">Scripts</h2>
+<div  *ngIf="scriptsPageable != null">
+  <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <div class="table-responsive">
+
+    Total: {{scriptsPageable.totalElements}} Current:{{scriptsPageable.numberOfElements}}
+
+      <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Id</th>
+          <th class="border-top-0" scope="col">Name</th>
+          <th class="border-top-0" scope="col">Description</th>
+          <th class="border-top-0" scope="col" style="width:120px"><a [routerLink]="['../scripts', 'new' ]" class="btn btn-secondary btn-sm">New script</a>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of scriptsPageable.content" >
+        
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.description}}</td>
+          <td style="white-space: nowrap">
+            <a [routerLink]="['../scripts', item.id ]" class="btn btn-secondary btn-sm">Edit</a>&nbsp;
+            <button type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
