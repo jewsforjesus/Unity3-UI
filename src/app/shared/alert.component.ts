@@ -1,5 +1,5 @@
 import { Component,  OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { Subscription, Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AlertService } from '../services/alert.service';
 import { Alert } from '../models/alert.model';
 

@@ -11,9 +11,7 @@ import { ConnectorListComponent } from './components/connector/connector.compone
 import { TraceComponent } from './components/trace/trace.component';
 import { TraceInstanceListComponent } from './components/trace/trace-instance-list.component';
 import { TraceListComponent } from './components/trace/trace-list.component';
-import { LookupGroupComponent } from './components/lookup/lookup-group.component';
 import { ConnectorSettingComponent } from './components/connector/connector-setting.component';
-import { LookupComponent } from './components/lookup/lookup.component';
 import {  RouteComponent } from './components/route/route.component';
 import { RouteEditComponent } from './components/route/route-edit.component';
 import { AppSettingComponent } from './components/setting/app-setting.component';
@@ -25,6 +23,8 @@ import { MessageComponent } from './components/message/message.component';
 import { MessageEditComponent } from './components/message/message-edit.component';
 import { ScriptComponent } from './components/script/script.component';
 import { ScriptEditComponent } from './components/script/script-edit.component';
+import { AlertMessageComponent } from './components/message/alert-message.component';
+import { AlertMessageEditComponent } from './components/message/alert-message-edit.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -56,13 +56,13 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'lookupgroups',
-    component: LookupGroupComponent,
+    path: 'alertmessages',
+    component:  AlertMessageComponent,
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'lookups/:lookupGroupId',
-    component: LookupComponent,
+    path: 'alertmessages/:id',
+    component:  AlertMessageEditComponent,
     canActivate: [OktaAuthGuard]
   },
   {

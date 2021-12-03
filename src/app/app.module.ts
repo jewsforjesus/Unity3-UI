@@ -20,13 +20,9 @@ import { TraceService } from './services/trace.service';
 import { TraceComponent } from './components/trace/trace.component';
 import { TraceInstanceListComponent } from './components/trace/trace-instance-list.component';
 import { TraceListComponent } from './components/trace/trace-list.component';
-import { LookupGroupComponent } from './components/lookup/lookup-group.component';
-import { LookupGroupService } from './services/lookup-group.service';
 import { TemplateService } from './services/template.service';
 import { ConnectorSettingComponent } from './components/connector/connector-setting.component';
 import { ConnectorSettingService } from './services/connector-setting.service';
-import { LookupComponent } from './components/lookup/lookup.component';
-import { LookupService } from './services/lookup.service';
 import { AppSettingComponent } from './components/setting/app-setting.component';
 import { AppSettingService } from './services/app-setting.service';
 import { TemplateComponent } from './components/template/template.component';
@@ -43,6 +39,10 @@ import { MessageEditComponent } from './components/message/message-edit.componen
 import { ScriptComponent } from './components/script/script.component';
 import { ScriptService } from './services/script.service';
 import { ScriptEditComponent } from './components/script/script-edit.component';
+import { AlertService } from './services/alert.service';
+import { AlertMessageComponent } from './components/message/alert-message.component';
+import { AlertMessageEditComponent } from './components/message/alert-message-edit.component';
+import { AlertMessageService } from './services/alert-message.service';
 
 
 
@@ -55,11 +55,9 @@ import { ScriptEditComponent } from './components/script/script-edit.component';
     TraceInstanceListComponent,
     TraceComponent,
     TraceListComponent,
-    LookupGroupComponent, 
     TemplateComponent,
     AppSettingComponent,
     ConnectorSettingComponent,
-    LookupComponent,
     MappingComponent,
     RouteComponent,
     MessageComponent,
@@ -68,7 +66,9 @@ import { ScriptEditComponent } from './components/script/script-edit.component';
     MappingEditComponent,
     TemplateEditComponent,
     ScriptComponent,
-    ScriptEditComponent
+    ScriptEditComponent,
+    AlertMessageComponent,
+    AlertMessageEditComponent
   ],
   imports: [
     BrowserModule,
@@ -84,15 +84,15 @@ import { ScriptEditComponent } from './components/script/script-edit.component';
     StatsService,
     ConnectorService,
     TraceService,
-    LookupGroupService,
     TemplateService,
     AppSettingService,
     ConnectorSettingService,
-    LookupService,
     MappingService,
     RouteService,
     QueueService,
     ScriptService,
+    AlertService,
+    AlertMessageService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService}],
