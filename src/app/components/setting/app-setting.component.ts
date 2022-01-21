@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AppSetting, Article, Library } from 'src/app/models/app-setting.model';
 import { AppSettingService } from 'src/app/services/app-setting.service';
 
@@ -48,33 +49,21 @@ export class AppSettingComponent implements OnInit {
     );
   }
 
-  saveByteArray() {
-    // var blob = new Blob([this.library.file],{type:this.library.contentType});
-    // var link = document.createElement('a');
-    // link.href = window.URL.createObjectURL(blob);
-    // link.download = this.library.filename;
-    // link.click();
-
-    //var contentType = headers["content-type"] || "application/octet-stream";
-    var urlCreator = window.URL || window.webkitURL;// || window.mozURL || window.msURL;
-    if (urlCreator) {
-        var blob = new Blob([this.library.file], { type: this.library.contentType });
-        var url = urlCreator.createObjectURL(blob);
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style.content = "display: none";
-        a.href = url;
-        a.download = this.library.filename; //you may assign this value from header as well 
-        a.click();
-        window.URL.revokeObjectURL(url);
-    }
+  downloadFile() {
+    
+    var urlCreator = window.URL || window.webkitURL;
+    this.settingsService.downloadLibrary().subscribe( blob => {
+      var url = urlCreator.createObjectURL(blob);
+          var a = document.createElement("a");
+          document.body.appendChild(a);
+          a.style.content = "display: none";
+          a.href = url;
+          a.download = this.library.filename; 
+          a.click();
+          window.URL.revokeObjectURL(url);
+    });    
 
 
   }
-
-
-
-
-
 
 }

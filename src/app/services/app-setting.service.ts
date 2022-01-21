@@ -30,6 +30,14 @@ export class AppSettingService  extends ApiBaseService {
     
   }
 
+  ///developer/libraries/download
+  downloadLibrary(): Observable<Blob> {
+  
+    const url = `${this.apiResource}/developer/libraries/download`;
+    return this.http.get(url, { responseType: 'blob' });
+    
+  }
+
   
 }
 
