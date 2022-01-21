@@ -1,0 +1,18 @@
+<h2 class="title">Log info
+
+  </h2>
+
+<div *ngIf="routeLog != null">
+
+  <ul>
+    <li>Date added: {{routeLog.audDateAdded}}</li>
+    <li>Message id: {{routeLog.messageId}}</li>
+    <li>Info: {{routeLog.info}}</li>
+  </ul>
+
+  <pre>
+    <textarea readonly class="form-control" rows="20">{{routeLog.data}}</textarea>
+  </pre>
+      
+</div>
+

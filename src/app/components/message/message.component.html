@@ -3,15 +3,29 @@
   <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
   <div class="table-responsive">
 
+    <div class="row">
+      <div class="col-sm">
     <ul>
       <li *ngFor="let item of statusCountReport">{{item.status}}: {{item.statusCount}}</li>
     </ul>
+</div>
 
-    <input type="text" class="form-control" id="txtStatus" placeholder="Search by status" [(ngModel)]="status">
-    <input type="text" class="form-control" id="txtKeyword" placeholder="Search by keyword" [(ngModel)]="keyword">
 
-    <button type="button" (click)="search()" class="btn btn-secondary btn-sm">Search</button>&nbsp;
-    <button type="button" (click)="clearSearch()" class="btn btn-secondary btn-sm">Clear</button>&nbsp;
+<div class="col-sm">
+  <div class="row">
+      <input type="text" class="form-control" id="txtStatus" placeholder="Search by status" [(ngModel)]="status">
+  </div>
+    <div class="row">
+      <input type="text" class="form-control" id="txtKeyword" placeholder="Search by keyword" [(ngModel)]="keyword">
+
+    </div>
+    <div class="row">
+      <button type="button" (click)="search()" class="btn btn-secondary btn-sm">Search</button>&nbsp;
+      <button type="button" (click)="clearSearch()" class="btn btn-secondary btn-sm">Clear</button>&nbsp;
+  
+    </div>
+    </div>
+  </div>
 
     <ngb-pagination [(collectionSize)]="eventMessagesPageable.totalElements" [(page)]="currentPage"
       [pageSize]=eventMessagesPageable.size [maxSize]="eventMessagesPageable.numberOfElements" [rotate]="true"
@@ -28,15 +42,16 @@
           <tr>
             <th class="border-top-0" scope="col">Id</th>
             <th class="border-top-0" scope="col">Name</th>
-            <th class="border-top-0" scope="col">Route</th>
-            <th class="border-top-0" scope="col">Size</th>
-            <th class="border-top-0" scope="col">Start Date</th>
-            <th class="border-top-0" scope="col">End Date</th>
+            <th class="border-top-0" scope="col">Queue</th>
+            <th class="border-top-0" scope="col">Start</th>
+            <th class="border-top-0" scope="col">End</th>
             <th class="border-top-0" scope="col">Duration</th>
+            <th class="border-top-0" scope="col">Size</th>
+            <th class="border-top-0" scope="col">Error</th>
+            <th class="border-top-0" scope="col">Success</th>
             <th class="border-top-0" scope="col">Status</th>
-            <th class="border-top-0" scope="col">Status Description</th>
+            <th class="border-top-0" scope="col">Description</th>
             <th class="border-top-0" scope="col" style="width:120px">
-              <a [routerLink]="['../messages', 'new' ]" class="btn btn-secondary btn-sm">New message</a>&nbsp;
             </th>
           </tr>
         </thead>
@@ -63,14 +78,20 @@
             </td>
             <td>
 
+            </td>
+            <td>
+
+            </td>
+            <td>
+
               <div class="form-group">
-                <input formControlName="status" placeholder="Type status to re-queue" class="form-control">
+                <input formControlName="status" placeholder="Type status to reprocess" class="form-control">
 
 
                 <div *ngIf="f.status.invalid && (f.status.dirty || f.status.touched)" class="alert alert-danger">
 
                   <div *ngIf="f.status.errors.required">
-                    Status to re-queue is required.
+                    Status to reprocess is required.
                   </div>
                 </div>
 
@@ -84,7 +105,7 @@
             </td>
             <td style="white-space: nowrap">
               <button type="submit" class="btn btn-secondary btn-sm"
-                [disabled]="!reQueueForm.valid">Re-Queue</button>&nbsp;
+                [disabled]="!reQueueForm.valid">Reprocess</button>&nbsp;
               <button type="button" class="btn btn-secondary btn-sm" (click)="clearReQueueForm()">Clear</button>&nbsp;
             </td>
           </tr>
@@ -92,14 +113,26 @@
           <tr *ngFor="let item of eventMessagesPageable.content">
 
             <td>{{item.id}}</td>
-            <td>{{item.queueName}}</td>
-            <td>{{item.eventName}}</td>
-            <td>{{item.size}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.queue}}</td>
             <td>{{item.startDate | date:'medium':'GMT'}}</td>
 
             <td>{{item.endDate | date:'medium':'GMT'}}</td>
 
             <td>{{formatDuration(item.duration)}}</td>
+            <td>{{item.size}}</td>
+            <td>{{item.errorCount}}
+
+              <div *ngIf="item.errorCount > 0; then thenBlock_er else elseBlock_er"></div>
+              <ng-template #thenBlock_er>
+                <span class="badge badge-danger">{{item.errorCount}}</span>
+              </ng-template>
+              <ng-template #elseBlock_er>
+                {{item.errorCount}}
+              </ng-template>
+
+            </td>
+            <td>{{item.successCount}}</td>
 
             <td>
 
@@ -117,10 +150,8 @@
               {{item.description}}
             </td>
             <td style="white-space: nowrap">
-              <a *ngIf="item.traceInstanceId" [routerLink]="['/traces/instance', item.traceInstanceId ]"
-                class="btn btn-secondary btn-sm">Trace</a>&nbsp;
-              <a *ngIf="item.traceInstanceId" [routerLink]="['/messages/', item.id ]"
-                class="btn btn-secondary btn-sm">Edit</a>&nbsp;
+              <a [routerLink]="['/messagewrappers/queue/', item.id ]"
+              class="btn btn-secondary btn-sm">Messages</a>&nbsp;
               <button [disabled]="item.status == 'QUEUED' || item.status == 'PROCESSING' " type="button"
                 (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
             </td>

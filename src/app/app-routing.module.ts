@@ -20,11 +20,14 @@ import { TemplateEditComponent } from './components/template/template-edit.compo
 import { MappingComponent } from './components/mapping/mapping.component';
 import { MappingEditComponent } from './components/mapping/mapping-edit.component';
 import { MessageComponent } from './components/message/message.component';
-import { MessageEditComponent } from './components/message/message-edit.component';
 import { ScriptComponent } from './components/script/script.component';
 import { ScriptEditComponent } from './components/script/script-edit.component';
 import { AlertMessageComponent } from './components/message/alert-message.component';
 import { AlertMessageEditComponent } from './components/message/alert-message-edit.component';
+import { MessageWrapperComponent } from './components/message/message-wrapper.component';
+import { MessageWrapperEditComponent } from './components/message/message-wrapper-edit.component';
+import { RouteLogListComponent } from './components/route/route-log-list.component';
+import { RouteLogComponent } from './components/route/route-log.component';
 
 const oktaConfig = {
   issuer: environment.issuer,
@@ -111,8 +114,23 @@ const routes: Routes = [
     canActivate: [OktaAuthGuard]
   },
   {
-    path: 'messages/:id',
-    component: MessageEditComponent,
+    path: 'messagewrappers/:messageId',
+    component: MessageWrapperEditComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
+    path: 'messagewrappers/queue/:queueId',
+    component: MessageWrapperComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
+    path: 'routelogs/message/:messageId',
+    component: RouteLogListComponent,
+    canActivate: [OktaAuthGuard]
+  },
+  {
+    path: 'routelogs/:id',
+    component: RouteLogComponent,
     canActivate: [OktaAuthGuard]
   },
    {

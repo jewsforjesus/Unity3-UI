@@ -35,7 +35,6 @@ import { RouteEditComponent } from './components/route/route-edit.component';
 import { RouteService } from './services/route.service';
 import { QueueService } from './services/message.service';
 import { MessageComponent } from './components/message/message.component';
-import { MessageEditComponent } from './components/message/message-edit.component';
 import { ScriptComponent } from './components/script/script.component';
 import { ScriptService } from './services/script.service';
 import { ScriptEditComponent } from './components/script/script-edit.component';
@@ -43,7 +42,13 @@ import { AlertService } from './services/alert.service';
 import { AlertMessageComponent } from './components/message/alert-message.component';
 import { AlertMessageEditComponent } from './components/message/alert-message-edit.component';
 import { AlertMessageService } from './services/alert-message.service';
-
+import { MessageWrapperComponent } from './components/message/message-wrapper.component';
+import { MessageWrapperService } from './services/message-wrapper.service';
+import { RouteLogService } from './services/route-log.service';
+import { MessageWrapperEditComponent } from './components/message/message-wrapper-edit.component';
+import { RouteLogListComponent } from './components/route/route-log-list.component';
+import { CommonModule } from '@angular/common';
+import { RouteLogComponent } from './components/route/route-log.component';
 
 
 @NgModule({
@@ -61,14 +66,17 @@ import { AlertMessageService } from './services/alert-message.service';
     MappingComponent,
     RouteComponent,
     MessageComponent,
-    MessageEditComponent,
     RouteEditComponent,
     MappingEditComponent,
     TemplateEditComponent,
     ScriptComponent,
     ScriptEditComponent,
     AlertMessageComponent,
-    AlertMessageEditComponent
+    AlertMessageEditComponent,
+    MessageWrapperComponent,
+    RouteLogListComponent,
+    MessageWrapperEditComponent,
+    RouteLogComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +101,8 @@ import { AlertMessageService } from './services/alert-message.service';
     ScriptService,
     AlertService,
     AlertMessageService,
+    MessageWrapperService,
+    RouteLogService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService}],

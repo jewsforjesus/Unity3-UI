@@ -1,13 +1,13 @@
 <div>
-
+  <h2 class="title">App settings</h2>
   <ul *ngIf="setting != null">
     <li>App id: {{setting.id}}</li>
     <li>App name: {{setting.name}}</li>
-      <ul>
-        <li>Loaded custom libraries</li>
-        <li *ngFor="let item of setting.settings"> {{item}}</li>
-      </ul>
-    <li> Current profile: 
+    <ul>
+      <li>Loaded custom libraries</li>
+      <li *ngFor="let item of setting.settings"> {{item}}</li>
+    </ul>
+    <li> Current profile:
       <span *ngIf="setting.springProfile =='LOCAL' " class="badge badge-primary">{{setting.springProfile}}</span>
       <span *ngIf="setting.springProfile =='DEV' " class="badge badge-warning">{{setting.springProfile}}</span>
       <span *ngIf="setting.springProfile =='STAGE' " class="badge badge-primary">{{setting.springProfile}}</span>
@@ -15,5 +15,36 @@
     </li>
 
   </ul>
+
+<h4>Downloads</h4>
+<table *ngIf="library != null" class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">File name</th>
+      <th scope="col">MD5 hash</th>
+      <th scope="col">Content type</th>
+      <th scope="col">Length</th>
+      <th scope="col">Upload date</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{library.filename}}</th>
+      <td>{{library.md5}}</td>
+      <td>{{library.contentType}}</td>
+      <td>{{library.length}}</td>
+      <td>{{library.uploadDate}}</td>
+      <td>
+        <button type="button" (click)="saveByteArray()" class="btn btn-secondary btn-sm">Download</button>&nbsp;
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="article != null" >
+  <h4>{{article.name}}</h4>
+  <p [innerHTML]="article.content"></p>
+</div>
 
 </div>

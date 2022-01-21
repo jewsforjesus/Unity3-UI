@@ -1,0 +1,90 @@
+    <h2 class="title">Messages</h2>
+<div *ngIf="messageWrapperPageable != null">
+  <div *ngIf="feedback" class="alert alert-{{feedback.type}}">{{ feedback.message }}</div>
+  <div class="table-responsive">
+
+    <div *ngIf="messageQueue">
+
+      <ul class="list-unstyled">
+        <li>
+          Name: {{messageQueue.name}}
+        </li>
+        <li>
+          Size: {{messageQueue.size}}
+        </li>
+     </ul>
+
+  </div>
+
+  <ngb-pagination [(collectionSize)]="messageWrapperPageable.totalElements" [(page)]="currentPage"
+  [pageSize]=messageWrapperPageable.size [maxSize]="messageWrapperPageable.numberOfElements" [rotate]="true"
+  [ellipses]="false" [boundaryLinks]="true" (pageChange)="loadPage($event)" size="sm"
+  [disabled]='messageWrapperPageable.totalElements < messageWrapperPageable.numberOfElements'>
+</ngb-pagination>
+
+    Total: {{messageWrapperPageable.totalElements}} Current:{{messageWrapperPageable.numberOfElements}}
+
+    <form  [formGroup]="messageWrapperForm" (ngSubmit)="onSubmit()">
+
+
+      <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Id</th>
+          <th class="border-top-0" scope="col">Partition</th>
+          <th class="border-top-0" scope="col">Message</th>
+          <th class="border-top-0" scope="col">Error</th>
+          <th class="border-top-0" scope="col">Status</th>
+          <th class="border-top-0" scope="col">Flag</th>
+          <th class="border-top-0" scope="col" style="width:120px">
+           
+          </th>
+        </tr>
+
+      </thead>
+      <tbody>
+
+        <tr>
+          <th></th>
+          <th></th>
+          <th>
+            
+            <textarea class="form-control" formControlName="message" placeholder="message" ></textarea>
+
+            <div *ngIf="f.message.invalid && (f.message.dirty || f.message.touched)" class="alert alert-danger">
+              <div *ngIf="f.message.errors.required">
+                Message is required.
+              </div> 
+            </div>
+
+          </th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th style="width:120px">
+            <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageWrapperForm.valid" >Save</button>&nbsp;
+            <button type="button" class="btn btn-secondary btn-sm" (click)="clearForm()" >Clear</button>
+          </th>
+        </tr>
+
+        <tr *ngFor="let item of messageWrapperPageable.content" >
+
+          <td>{{item.id}}</td>
+          <td>{{item.partitionNumber}}</td>
+          <td>{{item.message}}</td>
+          <td>{{item.errorMessage}}</td>
+          <td>{{item.status}}</td>
+          <td>{{item.flag}}</td>
+          <td style="white-space: nowrap">
+            <a [routerLink]="['/routelogs/message', item.id ]" class="btn btn-secondary btn-sm">Log</a>&nbsp;
+            <a [routerLink]="['/messagewrappers', item.id ]" class="btn btn-secondary btn-sm">Edit</a>&nbsp;
+            <button type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    </form>
+
+  </div>
+</div>

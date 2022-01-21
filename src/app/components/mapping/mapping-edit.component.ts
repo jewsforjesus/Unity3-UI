@@ -167,13 +167,11 @@ export class MappingEditComponent implements OnInit {
         }
         else {
 
-          this.sourcePathLookup(this.messageTemplateMap.sourceMessageTemplateId);
-          this.targetPathLookup(this.messageTemplateMap.targetMessageTemplateId);
+          this.sourcePathLookup(this.messageTemplateMap.sourceMessageTemplateId, this.messageTemplateMap.targetMessageTemplateId);
+          //this.targetPathLookup(this.messageTemplateMap.targetMessageTemplateId);
           this.loadTransformFunctionLookup(this.messageTemplateMap.transformClassPath);
 
-
           //load mappings once lookps finish loading
-
           data.mappings.forEach(m => {
 
             var mapping: FormGroup = this.formBuilder.group({
@@ -232,10 +230,12 @@ export class MappingEditComponent implements OnInit {
     });
   }
 
-  sourcePathLookup(id): void {
+  sourcePathLookup(id, targetId): void {
     this.messageTemplateService.loadPath(id).subscribe(result => {
       this.sourcePath = null;
       this.sourcePath = result;
+
+      this.targetPathLookup(targetId);
     });
   }
 
@@ -257,10 +257,10 @@ export class MappingEditComponent implements OnInit {
 
   }
 
-  refreshSourcePathList(id): void {
+  refreshPathList(id, targetId): void {
 
     if (id != null) {
-      this.sourcePathLookup(id.substring(3));
+      this.sourcePathLookup(id.substring(3), targetId.substring(3));
     }
 
   }

@@ -173,7 +173,7 @@ ngOnDestroy() {
   }
 
   delete(entity: Message): void {
-    if (confirm('Are you sure?')) {
+    if (confirm('Are you sure? This will delete all messages and logs for this queue.')) {
       this.eventMessageService.delete(entity).subscribe(() => {
           this.feedback = {type: 'success', message: 'Delete was successful!'};
           setTimeout(() => {

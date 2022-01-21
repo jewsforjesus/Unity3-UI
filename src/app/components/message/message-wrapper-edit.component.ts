@@ -9,44 +9,47 @@ import { Message } from 'src/app/models/message.model';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { QueueService } from 'src/app/services/message.service';
 import { RouteService } from 'src/app/services/route.service';
+import { MessageWrapperService } from 'src/app/services/message-wrapper.service';
+import { MessageWrapper } from 'src/app/models/message-wrapper.model';
 
 @Component({
-  selector: 'app-message-edit',
-  templateUrl: './message-edit.component.html'
+  selector: 'app-message-wrapper-edit',
+  templateUrl: './message-wrapper-edit.component.html'
 })
-export class MessageEditComponent implements OnInit {
+export class MessageWrapperEditComponent implements OnInit {
 
   id: string;
   feedback: any = null;
-  eventMessage: Message;
+  eventMessage: MessageWrapper;
   eventLookup: KeyValuePair[];
   formHeader: string;
 
   eventMessageForm = new FormGroup({
     id: new FormControl(''),
-    eventId: new FormControl(''),
-    message: new FormControl('')
+    queueId: new FormControl(''),
+    partitionNumber: new FormControl(''),
+    message: new FormControl(''),
+    errorMessage: new FormControl(''),
+    status: new FormControl(''),
+    flag: new FormControl('')
   });
 
   constructor(
     private formBuilder: FormBuilder, 
     private route: ActivatedRoute,
     private router: Router,
-    private eventMessageService: QueueService,
+    private messageWrapperService: MessageWrapperService,
     private eventTemplateService: RouteService,
     private alertService: AlertService ) {
   }
 
   get f() { return this.eventMessageForm.controls; }
 
+
+
   
   ngOnInit() {
 
-    this.eventMessageForm = this.formBuilder.group({
-      id: [''],
-      eventId: ['', [Validators.required]],
-      message: ['', [Validators.required]]
-    });
 
     this.eventTemplateService.lookup().subscribe(
       result => {
@@ -58,17 +61,17 @@ export class MessageEditComponent implements OnInit {
       .route
       .params
       .pipe(
-        map(p => p.id),
-        switchMap(id => {
+        map(p => p.messageId),
+        switchMap(messageId => {
           
-          if (id === 'new') { 
+          if (messageId === 'new') { 
             this.formHeader = "New message";
-            return of(new Message());
+            return of(new MessageWrapper());
           }
 
           this.formHeader = "Edit message";
 
-          return this.eventMessageService.findById(id);
+          return this.messageWrapperService.findById(messageId);
         })
       )
       .subscribe(message => {
@@ -76,15 +79,19 @@ export class MessageEditComponent implements OnInit {
         this.feedback = null;
 
           this.f['id'].setValue(this.eventMessage.id);
-          this.f['eventId'].setValue(this.eventMessage.eventId);
+          this.f['queueId'].setValue(this.eventMessage.queueId);
+          this.f['partitionNumber'].setValue(this.eventMessage.partitionNumber);
           this.f['message'].setValue(JSON.stringify(this.eventMessage.message));
+          this.f['errorMessage'].setValue(this.eventMessage.errorMessage);
+          this.f['status'].setValue(this.eventMessage.status);
+          this.f['flag'].setValue(this.eventMessage.flag);
 
         }
       );
   }
 
   load(): void {
-    this.eventMessageService.findById(this.eventMessage.id);
+    this.messageWrapperService.findById(this.eventMessage.id);
   }
 
 
@@ -92,19 +99,19 @@ export class MessageEditComponent implements OnInit {
 
     if (confirm('Are you sure? This will put the message back to queue as new message.')) {
 
-    const id = this.f['id'].value;
+    const id = this.eventMessage.id;
 
     const isCreate = id == null || id.length == 0 ? true : false;
     
-        this.eventMessageService.save(this.eventMessageForm.value, isCreate ).subscribe(
+        this.messageWrapperService.save(this.eventMessageForm.value, isCreate ).subscribe(
         result => {
             this.eventMessage = result;
           this.feedback = {type: 'success', message: 'Save was successful!'};
-          //this.eventMessageForm.reset();
-          //this.load();
+          this.eventMessageForm.reset();
+          this.load();
           setTimeout(() => {
             this.feedback = null;
-            this.router.navigate(['/messages']);
+            this.router.navigate(['/messagewrappers/queue/' + this.eventMessage.queueId]);
           }, 1000);
         }
       );
@@ -113,6 +120,6 @@ export class MessageEditComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['/messages']);
+    this.router.navigate(['/messagewrappers/queue/'+ this.eventMessage.queueId]);
   }
 }

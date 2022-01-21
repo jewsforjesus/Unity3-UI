@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Template } from 'src/app/models/template.model';
+import { Field, Template } from 'src/app/models/template.model';
 import { TemplateService } from 'src/app/services/template.service';
 
 @Component({
@@ -98,6 +98,10 @@ export class TemplateEditComponent implements OnInit {
     const id = this.messageTemplateForm.get('id').value;
 
     const isCreate = id == null || id.length == 0 ? true : false;
+
+    let field: Field = JSON.parse(this.messageTemplateForm.get('template').value);
+
+    this.f['template'].setValue(field);
 
     this.messageTemplateService.save(this.messageTemplateForm.value, isCreate).subscribe(
       messageTemplate => {

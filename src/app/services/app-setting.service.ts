@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiBaseService } from './api-base.service';
-import { AppSetting } from '../models/app-setting.model';
+import { AppSetting, Article, Library } from '../models/app-setting.model';
 
 @Injectable()
 export class AppSettingService  extends ApiBaseService {
@@ -13,6 +13,20 @@ export class AppSettingService  extends ApiBaseService {
   
     const url = `${this.apiResource}`;
     return this.http.get<AppSetting>(url, this.httpOptions);
+    
+  }
+
+  loadArticles(): Observable<Article> {
+  
+    const url = `${this.apiResource}/developer/articles`;
+    return this.http.get<Article>(url, this.httpOptions);
+    
+  }
+
+  loadLibraries(): Observable<Library> {
+  
+    const url = `${this.apiResource}/developer/libraries`;
+    return this.http.get<Library>(url, this.httpOptions);
     
   }
 
