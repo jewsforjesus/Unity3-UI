@@ -1,0 +1,51 @@
+    <h2 class="title">Route logs
+
+    </h2>
+<div *ngIf="routeLogPageable != null">
+  <div class="table-responsive">
+
+    <div *ngIf="messageWrapper">
+
+      <ul class="list-unstyled">
+        <li>
+          Error message: {{messageWrapper.errorMessage}}
+        </li>
+        <li>
+          Status: {{messageWrapper.status}}
+        </li>
+        <li>
+          Flag: {{messageWrapper.flag}}
+        </li>
+     </ul>
+
+  </div>
+
+    Total: {{routeLogPageable.totalElements}} Current:{{routeLogPageable.numberOfElements}}
+
+      <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th class="border-top-0" scope="col">Date added</th>
+          <th class="border-top-0" scope="col">Info</th>
+          <th class="border-top-0" scope="col">Data</th>
+          <th class="border-top-0" scope="col" style="width:120px"></th>
+        </tr>
+
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of routeLogPageable.content" >
+
+          <td>{{item.audDateAdded}}</td>
+          <td>{{item.info}}</td>
+          <td>{{item.data}}</td>
+          <td style="white-space: nowrap">
+            <a [routerLink]="['/routelogs', item.id ]" class="btn btn-secondary btn-sm">More</a>&nbsp;
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>

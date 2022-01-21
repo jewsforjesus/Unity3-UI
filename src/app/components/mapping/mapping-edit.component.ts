@@ -10,6 +10,7 @@ import { TemplateService } from 'src/app/services/template.service';
 import { KeyValuePair } from 'src/app/models/key-value-pair.model';
 import { MappingService } from 'src/app/services/mapping.service';
 import { NgbActiveModal, NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ScriptService } from 'src/app/services/script.service';
 
 @Component({
   selector: 'mapping-edit',
@@ -23,6 +24,8 @@ export class MappingEditComponent implements OnInit {
 
   transformClassLookup: KeyValuePair[];
   transformFunctionLookup: KeyValuePair[];
+
+  transformScriptLookup: KeyValuePair[];
 
   messageTemplates: Template[];
 
@@ -40,7 +43,8 @@ export class MappingEditComponent implements OnInit {
     private router: Router,
     private messageTemplateMapService: MappingService,
     private messageTemplateService: TemplateService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private scriptService: ScriptService
   ) {
   }
 
@@ -56,7 +60,7 @@ export class MappingEditComponent implements OnInit {
       sourceMessageTemplateId: ['', [Validators.required]],
       targetMessageTemplateId: ['', [Validators.required]],
       transformClassPath: [],
-      clientScript: [''],
+      transformScriptId: [null],
       joinKeySource: [''],
       joinKeyTarget:[''],
       mappings: this.formBuilder.array([]),
@@ -151,8 +155,8 @@ export class MappingEditComponent implements OnInit {
         this.f['description'].setValue(this.messageTemplateMap.description);
         this.f['sourceMessageTemplateId'].setValue(this.messageTemplateMap.sourceMessageTemplateId);
         this.f['targetMessageTemplateId'].setValue(this.messageTemplateMap.targetMessageTemplateId);
+        this.f['transformScriptId'].setValue(this.messageTemplateMap.transformScriptId);
         this.f['transformClassPath'].setValue(this.messageTemplateMap.transformClassPath);
-        this.f['clientScript'].setValue(this.messageTemplateMap.clientScript);
         this.f['joinKeySource'].setValue(this.messageTemplateMap.joinKeySource);
         this.f['joinKeyTarget'].setValue(this.messageTemplateMap.joinKeyTarget);
           
@@ -163,13 +167,11 @@ export class MappingEditComponent implements OnInit {
         }
         else {
 
-          this.sourcePathLookup(this.messageTemplateMap.sourceMessageTemplateId);
-          this.targetPathLookup(this.messageTemplateMap.targetMessageTemplateId);
+          this.sourcePathLookup(this.messageTemplateMap.sourceMessageTemplateId, this.messageTemplateMap.targetMessageTemplateId);
+          //this.targetPathLookup(this.messageTemplateMap.targetMessageTemplateId);
           this.loadTransformFunctionLookup(this.messageTemplateMap.transformClassPath);
 
-
           //load mappings once lookps finish loading
-
           data.mappings.forEach(m => {
 
             var mapping: FormGroup = this.formBuilder.group({
@@ -206,6 +208,8 @@ export class MappingEditComponent implements OnInit {
     
     this.loadMessageTemplateLookup();
 
+    this.loadTransformScriptLookup();
+
 
   }
 
@@ -214,16 +218,24 @@ export class MappingEditComponent implements OnInit {
     this.messageTemplateMapService.load();
   }
 
+  loadTransformScriptLookup(): void {
+    this.scriptService.lookup().subscribe(result => {
+      this.transformScriptLookup = result;
+    });
+  }
+
   loadMessageTemplateLookup(): void {
     this.messageTemplateService.lookup().subscribe(result => {
       this.messageTemplates = result;
     });
   }
 
-  sourcePathLookup(id): void {
+  sourcePathLookup(id, targetId): void {
     this.messageTemplateService.loadPath(id).subscribe(result => {
       this.sourcePath = null;
       this.sourcePath = result;
+
+      this.targetPathLookup(targetId);
     });
   }
 
@@ -245,10 +257,10 @@ export class MappingEditComponent implements OnInit {
 
   }
 
-  refreshSourcePathList(id): void {
+  refreshPathList(id, targetId): void {
 
     if (id != null) {
-      this.sourcePathLookup(id.substring(3));
+      this.sourcePathLookup(id.substring(3), targetId.substring(3));
     }
 
   }

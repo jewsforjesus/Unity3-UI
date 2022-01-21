@@ -20,13 +20,9 @@ import { TraceService } from './services/trace.service';
 import { TraceComponent } from './components/trace/trace.component';
 import { TraceInstanceListComponent } from './components/trace/trace-instance-list.component';
 import { TraceListComponent } from './components/trace/trace-list.component';
-import { LookupGroupComponent } from './components/lookup/lookup-group.component';
-import { LookupGroupService } from './services/lookup-group.service';
 import { TemplateService } from './services/template.service';
 import { ConnectorSettingComponent } from './components/connector/connector-setting.component';
 import { ConnectorSettingService } from './services/connector-setting.service';
-import { LookupComponent } from './components/lookup/lookup.component';
-import { LookupService } from './services/lookup.service';
 import { AppSettingComponent } from './components/setting/app-setting.component';
 import { AppSettingService } from './services/app-setting.service';
 import { TemplateComponent } from './components/template/template.component';
@@ -39,7 +35,21 @@ import { RouteEditComponent } from './components/route/route-edit.component';
 import { RouteService } from './services/route.service';
 import { QueueService } from './services/message.service';
 import { MessageComponent } from './components/message/message.component';
-import { MessageEditComponent } from './components/message/message-edit.component';
+import { ScriptComponent } from './components/script/script.component';
+import { ScriptService } from './services/script.service';
+import { ScriptEditComponent } from './components/script/script-edit.component';
+import { AlertService } from './services/alert.service';
+import { AlertMessageComponent } from './components/message/alert-message.component';
+import { AlertMessageEditComponent } from './components/message/alert-message-edit.component';
+import { AlertMessageService } from './services/alert-message.service';
+import { MessageWrapperComponent } from './components/message/message-wrapper.component';
+import { MessageWrapperService } from './services/message-wrapper.service';
+import { RouteLogService } from './services/route-log.service';
+import { MessageWrapperEditComponent } from './components/message/message-wrapper-edit.component';
+import { RouteLogListComponent } from './components/route/route-log-list.component';
+import { CommonModule } from '@angular/common';
+import { RouteLogComponent } from './components/route/route-log.component';
+
 
 @NgModule({
   declarations: [
@@ -50,18 +60,23 @@ import { MessageEditComponent } from './components/message/message-edit.componen
     TraceInstanceListComponent,
     TraceComponent,
     TraceListComponent,
-    LookupGroupComponent, 
     TemplateComponent,
     AppSettingComponent,
     ConnectorSettingComponent,
-    LookupComponent,
     MappingComponent,
     RouteComponent,
     MessageComponent,
-    MessageEditComponent,
     RouteEditComponent,
     MappingEditComponent,
-    TemplateEditComponent
+    TemplateEditComponent,
+    ScriptComponent,
+    ScriptEditComponent,
+    AlertMessageComponent,
+    AlertMessageEditComponent,
+    MessageWrapperComponent,
+    RouteLogListComponent,
+    MessageWrapperEditComponent,
+    RouteLogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,14 +92,17 @@ import { MessageEditComponent } from './components/message/message-edit.componen
     StatsService,
     ConnectorService,
     TraceService,
-    LookupGroupService,
     TemplateService,
     AppSettingService,
     ConnectorSettingService,
-    LookupService,
     MappingService,
     RouteService,
     QueueService,
+    ScriptService,
+    AlertService,
+    AlertMessageService,
+    MessageWrapperService,
+    RouteLogService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: ErrorHandler, useClass: ErrorHandlerService}],

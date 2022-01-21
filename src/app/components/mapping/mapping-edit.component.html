@@ -31,7 +31,7 @@
       <label class="form-check-label" for="sourceMessageTemplateId">Source Template</label>
 
       <select formControlName="sourceMessageTemplateId" class="form-control"
-        (change)="refreshSourcePathList($event.target.value)">
+        (change)="refreshPathList($event.source.value, $event.target.value)">
         <option *ngFor="let template of messageTemplates" [ngValue]="template.id">{{template.name}}</option>
       </select>
       <div
@@ -50,14 +50,20 @@
       <label class="form-check-label" for="targetMessageTemplateId">Target Template</label>
 
       <select id="targetMessageTemplateId" formControlName="targetMessageTemplateId" class="form-control"
-        (change)="refreshTargetPathList($event.target.value)">
+        (change)="refreshPathList($event.source.value, $event.target.value)">
         <option *ngFor="let template of messageTemplates" [ngValue]="template.id">{{template.name}}</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label class="form-check-label" for="clientScript">Client Script</label>
-      <textarea id="clientScript" formControlName="clientScript" class="form-control" rows="5"></textarea>
+
+      <label class="form-check-label" for="transformScriptId">Transform Script</label>
+      <select *ngIf="transformClassLookup?.length > 0" id="transformScriptId" formControlName="transformScriptId"
+        class="form-control">
+        <option value=null></option>
+        <option *ngFor="let item of transformScriptLookup" [ngValue]="item.key">{{item.value}}</option>
+      </select>
+
     </div>
 
 

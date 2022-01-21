@@ -2,18 +2,17 @@ import { Audit } from "./audit.model";
 
 export class Message extends Audit {
   id: string;
-  queueName: string;
-  eventId: string;
-  eventName: string;
-  message: string;
+  name: string;
+  queue: string;
+  routeId: string;
   status: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
+  duration: string;
   size: number;
-  duration: number;
-  dequeueCount: number;
-  traceInstanceId: string;
+  errorCount: number;
+  successCount: number;
 }
 
 

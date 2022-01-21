@@ -91,7 +91,6 @@ export class MappingComponent implements OnInit {
       this.f['description'].setValue(entity.description);
       this.f['sourceMessageTemplateId'].setValue(entity.sourceMessageTemplateId);
       this.f['targetMessageTemplateId'].setValue(entity.targetMessageTemplateId);
-      this.f['clientScript'].setValue(entity.clientScript);
       this.f['mappings'].setValue(entity.mappings);
     }
 

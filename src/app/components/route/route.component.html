@@ -33,8 +33,6 @@
           <td style="white-space: nowrap">
             <a *ngIf="item.id" [routerLink]="['/routes/', item.id ]" class="btn btn-secondary btn-sm">Edit</a>&nbsp;
             <button type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>&nbsp;
-            <a [routerLink]="['../traces/event', item.id ]" class="btn btn-secondary btn-sm">Trace</a>&nbsp;
-            <button type="button" (click)="deleteTrace(item)" class="btn btn-danger btn-sm">Delete Trace</button>
           </td>
         </tr>
       </tbody>

@@ -10,7 +10,7 @@ export class Mapping extends Audit{
   targetMessageRelationshipAttributeId: string;
   targetMessageTemplateId: string;
   targetMessageTemplateName: string;
-  clientScript: string;
+  transformScriptId: string;
   transformClassPath: string;
   joinKeySource: string;
   joinKeyTarget: string;

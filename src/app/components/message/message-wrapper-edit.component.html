@@ -4,32 +4,14 @@
     <div class="table-responsive">
 
       <ul>
-        <li>Id: {{f.id.value || 'n/a'}}</li>
-        <li>QueueName: {{eventMessage.queueName || ''}}</li>
-        <li>Size: {{eventMessage.size || ''}}</li>
-        <li>Start date: {{eventMessage.startDate || ''}}</li>
-        <li>End date: {{eventMessage.endDate || ''}}</li>
-        <li>Duration: {{eventMessage.duration || ''}}µs</li>
-        <li>dequeueCount: {{eventMessage.dequeueCount || ''}}</li>
+        <li>Queue Id: {{eventMessage.queueId || ''}}</li>
+        <li>Partition #: {{eventMessage.partitionNumber || ''}}</li>
+        <li>Error message: {{eventMessage.errorMessage || ''}}</li>
         <li>Status: {{eventMessage.status || ''}}</li>
-        <li>Description: {{eventMessage.description || ''}}</li>
-      </ul>
+        <li>Flag: {{eventMessage.flag || ''}}</li>
+      </ul> 
 
       <form [formGroup]="eventMessageForm" (ngSubmit)="onSubmit()">
-
-        <div class="form-group">
-
-      <label class="form-check-label" for="route">Route</label>
-
-          <select id="route" formControlName="eventId" class="form-control">
-            <option *ngFor="let event of eventLookup" [ngValue]="event.key">{{event.value}}</option>
-          </select>
-          <div *ngIf="f.eventId.invalid && (f.eventId.dirty || f.eventId.touched)" class="alert alert-danger">
-            <div *ngIf="f.eventId.errors.required">
-              Event is required.
-            </div>
-          </div>
-        </div>
 
         <div class="form-group">
 
