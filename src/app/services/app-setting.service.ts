@@ -23,17 +23,17 @@ export class AppSettingService  extends ApiBaseService {
     
   }
 
-  loadLibraries(): Observable<Library> {
+  loadLibraries(): Observable<Library[]> {
   
     const url = `${this.apiResource}/developer/libraries`;
-    return this.http.get<Library>(url, this.httpOptions);
+    return this.http.get<Library[]>(url, this.httpOptions);
     
   }
 
   ///developer/libraries/download
-  downloadLibrary(): Observable<Blob> {
+  downloadLibrary(id: string): Observable<Blob> {
   
-    const url = `${this.apiResource}/developer/libraries/download`;
+    const url = `${this.apiResource}/developer/libraries/download/${id}`;
     return this.http.get(url, { responseType: 'blob' });
     
   }

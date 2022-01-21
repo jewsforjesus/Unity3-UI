@@ -13,6 +13,7 @@ export class Article {
 }
 
 export class Library {
+   id: string;
    filename: string;
    md5: string;
    contentType: string;

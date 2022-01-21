@@ -17,7 +17,7 @@
   </ul>
 
 <h4>Downloads</h4>
-<table *ngIf="library != null" class="table table-bordered">
+<table *ngIf="libraries != null" class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">File name</th>
@@ -29,14 +29,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    <tr  *ngFor="let library of libraries" >
       <th scope="row">{{library.filename}}</th>
       <td>{{library.md5}}</td>
       <td>{{library.contentType}}</td>
       <td>{{library.length}}</td>
       <td>{{library.uploadDate}}</td>
       <td>
-        <button type="button" (click)="downloadFile()" class="btn btn-secondary btn-sm">Download</button>&nbsp;
+        <button type="button" (click)="downloadFile(library.id,library.filename)" class="btn btn-secondary btn-sm">Download</button>&nbsp;
       </td>
     </tr>
   </tbody>

@@ -17,7 +17,7 @@ export class AppSettingComponent implements OnInit {
   setting: AppSetting;
 
   article: Article;
-  library: Library;
+  libraries: Library[];
 
   ngOnInit() {
     
@@ -44,21 +44,21 @@ export class AppSettingComponent implements OnInit {
 
   loadLibrary(): void {
     this.settingsService.loadLibraries().subscribe(result => {
-      this.library = result;
+      this.libraries = result;
       }
     );
   }
 
-  downloadFile() {
+  downloadFile(id: string, filename: string) {
     
     var urlCreator = window.URL || window.webkitURL;
-    this.settingsService.downloadLibrary().subscribe( blob => {
+    this.settingsService.downloadLibrary(id).subscribe( blob => {
       var url = urlCreator.createObjectURL(blob);
           var a = document.createElement("a");
           document.body.appendChild(a);
           a.style.content = "display: none";
           a.href = url;
-          a.download = this.library.filename; 
+          a.download = filename; 
           a.click();
           window.URL.revokeObjectURL(url);
     });    
