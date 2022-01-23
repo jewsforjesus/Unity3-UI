@@ -39,9 +39,8 @@ export class RouteLogListComponent implements OnInit {
 
           return this.routeLogService.findByMessageId(messageId);
         })
-      ).subscribe(routeLog => {
-        this.routeLogPageable = routeLog;
-        console.log(this.routeLogPageable );
+      ).subscribe(routeLog => { 
+        this.routeLogPageable = routeLog; 
       }
     );
   

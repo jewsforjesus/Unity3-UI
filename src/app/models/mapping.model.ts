@@ -23,6 +23,8 @@ export class MappingTemplate{
   function: string;
   inactive: string;
   target: string;
+  emptyStringToNull:boolean;
+  nullToEmptyString:boolean;
 }
 
 export class source {

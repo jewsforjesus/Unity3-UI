@@ -80,6 +80,8 @@ export class MappingEditComponent implements OnInit {
       function: [''],
       inactive: [''],
       target: [''],
+      emptyStringToNull: [null],
+      nullToEmptyString: [null],
     })
   }
 
@@ -180,6 +182,8 @@ export class MappingEditComponent implements OnInit {
               function: [m.function],
               inactive: [m.inactive],
               target: [m.target],
+              emptyStringToNull: [m.emptyStringToNull],
+              nullToEmptyString: [m.nullToEmptyString],
             });
 
             this.mappings().push(mapping);
