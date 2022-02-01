@@ -37,6 +37,10 @@ export class MessageWrapperComponent implements OnInit {
     flag: new FormControl('')
   });
 
+  get eventMessagesPageable(): Page<MessageWrapper> {
+    return this.messageWrapperService.messageWrapperPageable;
+  }
+
  get f() { return this.messageWrapperForm.controls; }
 
   initalizeForm(queueId: string){
@@ -88,7 +92,7 @@ export class MessageWrapperComponent implements OnInit {
     }
 
     load(queueId: string): void {
-      this.messageWrapperService.load(queueId, 0);
+      this.messageWrapperService.load(queueId, this.currentPage);
     }
 
     loadPage(page: number) {

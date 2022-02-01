@@ -121,29 +121,18 @@
 
             <td>{{formatDuration(item.duration)}}</td>
             <td>{{item.size}}</td>
-            <td>{{item.errorCount}}
-
-              <div *ngIf="item.errorCount > 0; then thenBlock_er else elseBlock_er"></div>
-              <ng-template #thenBlock_er>
-                <span class="badge badge-danger">{{item.errorCount}}</span>
-              </ng-template>
-              <ng-template #elseBlock_er>
+            <td>
+              <div class="{{item.errorCount > 0 ? 'badge badge-danger' : '' }}">
                 {{item.errorCount}}
-              </ng-template>
-
+              </div>
             </td>
             <td>{{item.successCount}}</td>
 
             <td>
 
-              <div *ngIf="isErrorStatus(item.status); then thenBlock else elseBlock"></div>
-              <ng-template #thenBlock>
-                <span class="badge badge-danger">{{item.status}}</span>
-              </ng-template>
-              <ng-template #elseBlock>
+              <div class="{{isErrorStatus(item.status)? 'badge badge-danger' : item.errorCount > 0 ? 'badge badge-danger' : ''  }}">
                 {{item.status}}
-              </ng-template>
-
+              </div>
 
             </td>
             <td>

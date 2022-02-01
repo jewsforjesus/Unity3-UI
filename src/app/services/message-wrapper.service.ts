@@ -29,9 +29,16 @@ export class MessageWrapperService  extends ApiBaseService {
     return result;
   }
 
-  load(queueId: string, pageNumber: number): void {
+  load(queueId, pageNumber): void {
 
-    const url = `${this.apiResource}/list/${queueId}/${pageNumber}`;
+    if (pageNumber == null || pageNumber <= 0) {
+      pageNumber = 0;
+    }
+    else {
+      pageNumber = pageNumber - 1;
+    }
+
+    let url = `${this.apiResource}/list/${queueId}/${pageNumber}`;
 
     this.http.get<Page<MessageWrapper>>(url, this.httpOptions).subscribe(result => {
 
@@ -41,6 +48,21 @@ export class MessageWrapperService  extends ApiBaseService {
     );
 
   }
+
+  // load(queueId: string, pageNumber: number): void {
+
+  //   const url = `${this.apiResource}/list/${queueId}/${pageNumber}`;
+
+  //   console.log(url);
+
+  //   this.http.get<Page<MessageWrapper>>(url, this.httpOptions).subscribe(result => {
+
+  //     this.messageWrapperPageable = result;
+
+  //   }
+  //   );
+
+  // }
 
   lookup(): Observable<KeyValuePair[]> {
 
