@@ -43,16 +43,14 @@
             {{f.id.value || 'n/a'}} 
           </td>
           <td >
-            <div class="form-group">
-            <select formControlName="profile" class="form-control">
-              <option *ngFor="let profile of profiles" [ngValue]="profile">{{profile}}</option>
-            </select>
-            <div *ngIf="f.profile.invalid && (f.profile.dirty || f.profile.touched)" class="alert alert-danger">
-              <div *ngIf="f.profile.errors.required">
-                Profile is required.
-              </div> 
-            </div>
-          </div>
+
+            <div *ngFor="let profile of profiles; let i=index">
+              <label>
+                <input type="checkbox" [value]="profile.name" [(checked)]="profile.isSelected" (change)="onCheckboxChange($event)" />
+                {{profile.name}}
+              </label>
+            </div>  
+
           </td>
           <td>
 
@@ -95,7 +93,11 @@
         <tr *ngFor="let item of connectorSettingsPageable.content" [class.active]="item === selectedConnectorSetting">
 
           <td>{{item.id}}</td>
-          <td>{{item.profile}}</td>
+          <td>
+
+          {{getShortName(item.profile)}}
+
+          </td>
           <td>{{item.key}}</td>
           <td>{{item.value}}</td>
           <td>{{item.secret}}</td>

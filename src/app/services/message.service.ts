@@ -108,6 +108,14 @@ export class QueueService  extends ApiBaseService {
 
   }
 
+  reQueueById(queueId: string): Observable<any> {
+
+    const url = `${this.apiResource}/reprocess/queue/${queueId}`;
+
+    return this.http.put<any>(url, this.httpOptions);
+
+  }
+
 }
 
 
