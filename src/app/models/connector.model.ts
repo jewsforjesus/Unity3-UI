@@ -11,7 +11,7 @@ export class Connector extends Audit {
 export class ConnectorSetting extends Audit{
   id: string;
   connectorId: string;
-  profile: string;
+  profile: string[];
   key: string;
   value: string;
   secret: boolean;

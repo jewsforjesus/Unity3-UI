@@ -142,6 +142,8 @@
               <a [routerLink]="['/messagewrappers/queue/', item.id ]"
               class="btn btn-secondary btn-sm">Messages</a>&nbsp;
               <button [disabled]="item.status == 'QUEUED' || item.status == 'PROCESSING' " type="button"
+                (click)="reprocessById(item.id)" class="btn btn-secondary btn-sm">Reprocess</button>&nbsp;
+              <button [disabled]="item.status == 'QUEUED' || item.status == 'PROCESSING' " type="button"
                 (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
             </td>
           </tr>

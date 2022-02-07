@@ -138,6 +138,23 @@ ngOnDestroy() {
 
   }
 
+  reprocessById(queueId: string){
+
+  if (confirm('Are you sure?')) {
+
+    this.eventMessageService.reQueueById(queueId).subscribe(
+      result => {
+
+        this.eventMessageService.load(this.status, this.keyword, this.currentPage);
+
+      }
+    );
+    
+  }
+
+
+}
+
   clearReQueueForm() {
     this.reQueueForm.reset();
   }
