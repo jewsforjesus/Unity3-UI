@@ -19,7 +19,7 @@
         <tr *ngFor="let item of scriptsPageable.content" >
         
           <td>{{item.id}}</td>
-          <td>{{item.name}}</td>
+          <td>{{item.name}} <span class="badge badge-info">{{item.tag}}</span> </td>
           <td>{{item.description}}</td>
           <td style="white-space: nowrap">
             <a [routerLink]="['../scripts', item.id ]" class="btn btn-secondary btn-sm">Edit</a>&nbsp;

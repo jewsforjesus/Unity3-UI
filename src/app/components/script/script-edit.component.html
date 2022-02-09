@@ -30,36 +30,8 @@
 
 
     <div class="form-group">
-      <label class="form-check-label" for="importedScriptIDs">Import scripts</label>
 
-      <div formArrayName="importedScriptIDs">
-        <div *ngFor="let template of f.importedScriptIDs['controls']; let scriptIndex=index">
-          <div class="form-inline">
-            <select [formControlName]="scriptIndex" class="form-control">
-              <option *ngFor="let item of scriptLookup" [ngValue]="item.key">{{item.value}}</option>
-            </select>
-
-            <button type="button" class="btn btn-danger btn-sm"
-              (click)="removeImportedScript(scriptIndex)">X</button>
-          </div>
-
-        </div>
-        <button id="importedScriptIDs" type="button" class="btn btn-secondary btn-sm" (click)="addImportedScript()">Add imported script</button>
-      </div>
-    </div>
-
-
-
-    <div class="form-group">
-
-      <div class="form-check">
-
-      <label class="form-check-label">
-        <input type="checkbox" formControlName="isCustomizable" class="form-check-input">
-        Customizable?
-      </label>
-
-      </div>
+      <span class="badge badge-info">{{script.tag}}</span> 
 
     </div>
 

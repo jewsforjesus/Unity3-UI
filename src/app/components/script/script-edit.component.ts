@@ -47,8 +47,7 @@ export class ScriptEditComponent implements OnInit {
       importedScriptIDs: this.formBuilder.array([
         this.formBuilder.control([''])
       ]),
-      script: ['', [Validators.required]],
-      isCustomizable: [false],
+      script: ['', [Validators.required]]
     });
 
   }
@@ -87,6 +86,8 @@ export class ScriptEditComponent implements OnInit {
       )
       .subscribe(data => {
 
+        
+
         this.feedback = null;
 
         this.script = data;
@@ -103,8 +104,6 @@ export class ScriptEditComponent implements OnInit {
         }
 
         this.f['script'].setValue(this.script.script);
-        this.f['isCustomizable'].setValue(this.script.isCustomizable);
-
 
         });
     
