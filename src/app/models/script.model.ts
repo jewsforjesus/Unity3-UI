@@ -7,7 +7,7 @@ export class Script extends Audit {
   description: string;
   importedScriptIDs: KeyValuePair[];
   script: string;
-  isCustomizable: boolean;
+  tag: string;
 }
 
 
