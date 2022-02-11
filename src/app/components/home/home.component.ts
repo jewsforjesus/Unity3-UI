@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
   subscriptionAlertService: Subscription;
 
-  chartOptions: ChartOptions = {
-    responsive: true,
+  chartOptions: any = {
+    responsive: true
   };
   chartLabels: Label[] = [];
   chartType: ChartType = 'line';
@@ -88,8 +88,6 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
         }
 
-
-
         this.rows = this.dedupe(this.rows);
         this.cols = this.dedupe(this.cols);
 
@@ -110,7 +108,13 @@ export class HomeComponent implements OnInit, OnDestroy  {
             data.push(this.findVal(row, col));
           }
 
-          let dataSet = { data: data, label: label};
+
+          let dataSet = { data: data, label: label, 
+            backgroundColor: this.rgbaByStatus(label, .5),
+            borderColor:  this.rgbaByStatus(label, 255),
+            pointBackgroundColor: this.rgbaByStatus(label, .5),
+            pointBorderColor: this.rgbaByStatus(label, 255),
+          };
 
           this.chartData.push( dataSet);
 
@@ -118,6 +122,21 @@ export class HomeComponent implements OnInit, OnDestroy  {
 
       }
     );
+  }
+
+  rgbaByStatus(status: string, opacity: number){
+
+    const randomNum = () => Math.floor(Math.random() * (235 - 52 + 1) + 52);
+
+    const randomRGB = () => `rgb(${randomNum()}, ${randomNum()}, ${randomNum()}, 255)`;
+    
+    let result = [
+      status == 'DONE' ? `rgba(74,159,222,${opacity})` : 
+      status.startsWith("ERROR") ? `rgba(226,114,138,${opacity})` : randomRGB()
+      ]
+
+    return result;
+
   }
 
   dedupe(array): string[]{

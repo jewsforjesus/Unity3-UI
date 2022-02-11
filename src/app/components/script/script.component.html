@@ -22,8 +22,8 @@
           <td>{{item.name}} <span class="badge badge-info">{{item.tag}}</span> </td>
           <td>{{item.description}}</td>
           <td style="white-space: nowrap">
-            <a [routerLink]="['../scripts', item.id ]" class="btn btn-secondary btn-sm">Edit</a>&nbsp;
-            <button type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
+            <a [routerLink]="['../scripts', item.id ]"  class="btn btn-secondary btn-sm">Edit</a>&nbsp;
+            <button [disabled]="item.tag == 'SYSTEM_SHARED' "  type="button" (click)="delete(item)" class="btn btn-danger btn-sm">Delete</button>
           </td>
         </tr>
       </tbody>
