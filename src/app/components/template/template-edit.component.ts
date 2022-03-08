@@ -9,7 +9,8 @@ import { TemplateService } from 'src/app/services/template.service';
 
 @Component({
   selector: 'app-template-edit',
-  templateUrl: 'template-edit.component.html'
+  templateUrl: 'template-edit.component.html',
+  styleUrls: ['./tree-view.css']
 })
 export class TemplateEditComponent implements OnInit {
 
@@ -17,11 +18,23 @@ export class TemplateEditComponent implements OnInit {
 
   messageTemplate: Template;
 
+  selectedTreeNode: Field | null;
+
+  dataTypes: string[] = ['string','number','object','boolean','array'];
+
+  newName: string;
+  newType: string;
+
+  updatedName: string;
+
+  action: string = null;
+
   templateId: string;
 
   formHeader: String;
 
   feedback: any = null;
+
 
   messageTemplateForm: FormGroup;
 
@@ -80,11 +93,146 @@ export class TemplateEditComponent implements OnInit {
         this.f['description'].setValue(this.messageTemplate.description);
         this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
 
-
         });
+
+     
+        
     
 
   }
+
+
+  public selectNode( node: Field ) : void {
+ 
+    if(this.selectedTreeNode == null){
+      this.selectedTreeNode = node;
+    }
+    else{
+      this.selectedTreeNode = null;
+    }
+
+
+
+	}
+
+  changeAction(node, action:string){
+
+    this.selectedTreeNode = node;
+    
+    this.action = action.toUpperCase();
+
+  }
+
+
+  preOrderTraversal = function(node: Field){
+              
+    if(!node) return;
+
+    //console.log(node.name  );
+    
+    if(node.fields != null){
+
+      node.fields.forEach(f=>{
+
+        f.parent = node;
+
+        //console.log(f.parent.name + " - " + f.name  );
+
+        if(f.fields != null){
+          this.preOrderTraversal(f);
+        }
+
+      });
+
+    }
+
+  }
+
+  public updateNode(selectedNode: Field ) : void {
+
+    let field = new Field();
+
+    //copy to new var to avoid current node show updated value which is not sent to api yet.
+    field.path = selectedNode.path;
+    field.name = this.updatedName;
+    field.type = selectedNode.type;
+
+    this.feedback = { type: 'info', message: 'Saving' };
+
+    this.messageTemplateService.editField(this.messageTemplate.id, field.path, field).subscribe(result => {
+
+      this.messageTemplate = result;
+
+      this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
+
+      this.feedback = null;
+
+    });
+
+    this.action = null;
+    this.selectedTreeNode = null;
+    this.updatedName = null;
+ 
+	}
+
+  selectedType(event: any) {
+    //update the ui
+    this.selectedTreeNode.type = event.target.value;
+
+  }
+
+
+  deleteNode(selectedNode: Field): void{
+
+    if (confirm('Are you sure?')) {
+
+    this.feedback = { type: 'info', message: 'Saving' };
+
+    this.messageTemplateService.deleteField(this.messageTemplate.id, selectedNode.path).subscribe(result => {
+
+      this.messageTemplate = result;
+
+      this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
+
+      this.feedback = null;
+
+    });
+
+
+  }
+
+  }
+
+  addNode(selectedNode: Field): void {
+
+    let field = new Field();
+
+    field.name = this.newName;
+    field.type = this.newType == null ? 'string' : this.newType;
+
+    this.feedback = { type: 'info', message: 'Saving' };
+
+    this.messageTemplateService.addField(this.messageTemplate.id, selectedNode.path, field).subscribe(result => {
+
+      this.messageTemplate = result;
+
+      this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
+
+      this.feedback = null;
+
+    });
+
+      this.newName = null;
+      this.newType = null;
+
+
+      //hide add form
+      this.action = null;
+      this.selectedTreeNode = null;
+ 
+	}
+
+
 
 
   load(): void {
@@ -95,13 +243,15 @@ export class TemplateEditComponent implements OnInit {
 
   onSubmit() {
 
+    this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
+
     const id = this.messageTemplateForm.get('id').value;
 
     const isCreate = id == null || id.length == 0 ? true : false;
 
-    let field: Field = JSON.parse(this.messageTemplateForm.get('template').value);
+    //let field: Field = JSON.parse(this.messageTemplateForm.get('template').value);
 
-    this.f['template'].setValue(field);
+    this.f['template'].setValue(this.messageTemplateForm.get('template').value);
 
     this.messageTemplateService.save(this.messageTemplateForm.value, isCreate).subscribe(
       messageTemplate => {

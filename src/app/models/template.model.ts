@@ -12,6 +12,7 @@ export class Field  {
   level: number;
   name: string;
   type: string;
+  parent: Field;
   fields: Field[];
 }
 

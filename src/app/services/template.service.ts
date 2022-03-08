@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiBaseService } from './api-base.service';
 import { Page } from '../models/page.model';
-import { Template } from '../models/template.model';
+import { Field, Template } from '../models/template.model';
 
 
 @Injectable()
@@ -48,6 +48,36 @@ export class TemplateService  extends ApiBaseService {
       return this.http.put<Template>(url, entity);
     }
 
+
+  }
+
+  editField(id: string, originalPath: string, field: Field): Observable<Template> {
+    
+    let url = `${this.apiResource}/field/${id}`;
+
+    let params = new HttpParams().set('path', originalPath);
+
+    return this.http.put<Template>(url, field,{params});
+
+  }
+
+  addField(id: string, parentPath: string, field: Field): Observable<Template> {
+    
+    let url = `${this.apiResource}/field/${id}`;
+
+    let params = new HttpParams().set('path', parentPath);
+
+    return this.http.post<Template>(url, field,{params});
+
+  }
+
+  deleteField(id: string, path: string): Observable<Template> {
+    
+    let url = `${this.apiResource}/field/${id}`;
+
+    let params = new HttpParams().set('path', path);
+
+    return this.http.delete<Template>(url,{params});
 
   }
 
