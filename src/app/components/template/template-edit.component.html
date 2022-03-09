@@ -22,15 +22,90 @@
 
     </div>
 
-    <div class="form-group">
-      <code>
-      <textarea formControlName="template" class="form-control" rows="10"></textarea>
-    </code>
-    </div>
-
-
     <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateForm.valid">Save</button>&nbsp;
     <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
+
+    <ng-template #nodeTemplateRef let-node>
+ 
+      <div class="node" [class.node--selected]="( node === selectedTreeNode )">
+     
+        <a (click)="selectNode( node )" class="node__name">
+          {{ node.name }} {{node.path == 'root' ? '' : node.fields == null ? ' [' + node.type + ']' : ''}}
+        </a>
+
+        <div *ngIf="selectedTreeNode && (node.path == selectedTreeNode.path)" >
+
+        <button type="button" (click)="changeAction(node, 'ADD')" class="btn btn-outline-primary btn-sm">Add</button> &nbsp;
+        <button type="button" (click)="changeAction(node, 'EDIT')" class="btn btn-outline-primary btn-sm">Edit</button> &nbsp;
+        <button *ngIf=" node.path != 'root' " type="button" (click)="deleteNode(node)" class="btn btn-outline-danger btn-sm">Delete</button>
+
+        <div *ngIf="action == 'EDIT' && selectedTreeNode && (node.path == selectedTreeNode.path)" class="more">
+          <ul>
+            <li>
+              <input type="text" (change)='updatedName=$event.target.value' [value]="node.name" class="form-control">
+            </li>
+            <li>
+              <select (change)="node.type=$event.target.value" class="form-control">
+                <option *ngFor="let type of dataTypes" [selected]="node.type == type ? true : false" >{{type}}</option>
+              </select>
+              <button type="button" (click)="updateNode(selectedTreeNode)" class="btn btn-primary btn-sm">Save</button>
+            </li>
+          </ul>
+          
+        </div>
+
+        <div *ngIf="action == 'ADD' && selectedTreeNode && (node.path == selectedTreeNode.path)" class="more">
+          <ul>
+            <li>
+              <input type="text"  (change)='newName=$event.target.value' class="form-control">
+            </li>
+            <li>
+              <select (change)="newType=$event.target.value" class="form-control">
+                <option *ngFor="let type of dataTypes" >{{type}}</option>
+              </select>
+
+            </li>
+            <button type="button" (click)="addNode(selectedTreeNode)" class="btn btn-primary btn-sm">Save</button>
+
+          </ul>
+        </div>
+
+      </div>
+
+     
+        <div *ngIf="node.fields" class="node__fields">
+     
+          <!-- Invoke the recursive template. -->
+          <ng-template
+            ngFor
+            [ngForOf]="node.fields"
+            [ngForTemplate]="nodeTemplateRef">
+            <!--
+              NOTE: The "$implicit" property of the ngFor context is what will
+              be made available to the template ref's implicit let-node binding.
+            -->
+          </ng-template>
+     
+        </div>
+     
+      </div>
+     
+    </ng-template>
+     
+    <!--
+      Initiate the recursive template rendering. Because our recursive template is going to
+      be using the ngFor directive to render recursively, the "context" in the recursive
+      instances is going to be the ngForContext. As such, we have to "mock" the initial
+      context to look like the context that the ngFor directive will expose internally.
+     
+      NOTE: If we used ngContainer or ngTemplate to invoke the recursion internally, we'd
+      have more control over which values were made available at each level.
+    -->
+    <ng-template
+      [ngTemplateOutlet]="nodeTemplateRef"
+      [ngTemplateOutletContext]="{ $implicit: this.messageTemplate.template }">
+    </ng-template>
+
 
   </form>
 

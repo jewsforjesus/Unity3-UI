@@ -1,0 +1,19 @@
+.node {
+    padding-top: 4px;
+}
+.node__name {
+    cursor: pointer;
+}
+.node__fields {
+    border-left: 2px solid #CCCCCC;
+    margin: 5px 0px 5px 20px;
+    padding-left: 5px;
+}
+.node--selected > .node__name {
+    background-color:#8d8e91;
+    color: white;
+}
+
+/* .more {
+	color: #999999 ;
+} */

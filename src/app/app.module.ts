@@ -49,6 +49,7 @@ import { MessageWrapperEditComponent } from './components/message/message-wrappe
 import { RouteLogListComponent } from './components/route/route-log-list.component';
 import { CommonModule } from '@angular/common';
 import { RouteLogComponent } from './components/route/route-log.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import { RouteLogComponent } from './components/route/route-log.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     LoaderService,
