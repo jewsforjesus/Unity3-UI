@@ -22,19 +22,22 @@
 
     </div>
 
+    <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateForm.valid">Save</button>&nbsp;
+    <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
 
     <ng-template #nodeTemplateRef let-node>
  
       <div class="node" [class.node--selected]="( node === selectedTreeNode )">
      
         <a (click)="selectNode( node )" class="node__name">
-          {{ node.name }} {{node.fields == null ? ' [' + node.type + ']' : ''}}
+          {{ node.name }} {{node.path == 'root' ? '' : node.fields == null ? ' [' + node.type + ']' : ''}}
         </a>
 
         <div *ngIf="selectedTreeNode && (node.path == selectedTreeNode.path)" >
+
         <button type="button" (click)="changeAction(node, 'ADD')" class="btn btn-outline-primary btn-sm">Add</button> &nbsp;
         <button type="button" (click)="changeAction(node, 'EDIT')" class="btn btn-outline-primary btn-sm">Edit</button> &nbsp;
-        <button type="button" (click)="deleteNode(node)" class="btn btn-outline-danger btn-sm">Delete</button>
+        <button *ngIf=" node.path != 'root' " type="button" (click)="deleteNode(node)" class="btn btn-outline-danger btn-sm">Delete</button>
 
         <div *ngIf="action == 'EDIT' && selectedTreeNode && (node.path == selectedTreeNode.path)" class="more">
           <ul>
@@ -103,8 +106,6 @@
       [ngTemplateOutletContext]="{ $implicit: this.messageTemplate.template }">
     </ng-template>
 
-    <button type="submit" class="btn btn-secondary btn-sm" [disabled]="!messageTemplateForm.valid">Save</button>&nbsp;
-    <button type="button" class="btn btn-secondary btn-sm" (click)="cancel()">Cancel</button>
 
   </form>
 

@@ -73,7 +73,12 @@ export class TemplateEditComponent implements OnInit {
 
           if (id === 'new') {
             this.formHeader = "New template";
-            return of(new Template());
+
+            let template : Template = new Template();
+
+            template.template = new Field();
+
+            return of(template);
           }
 
           this.formHeader = "Edit template";
@@ -150,11 +155,12 @@ export class TemplateEditComponent implements OnInit {
 
   public updateNode(selectedNode: Field ) : void {
 
+
     let field = new Field();
 
     //copy to new var to avoid current node show updated value which is not sent to api yet.
     field.path = selectedNode.path;
-    field.name = this.updatedName;
+    field.name = this.updatedName == null ? selectedNode.name : this.updatedName;
     field.type = selectedNode.type;
 
     this.feedback = { type: 'info', message: 'Saving' };
@@ -243,15 +249,11 @@ export class TemplateEditComponent implements OnInit {
 
   onSubmit() {
 
-    this.f['template'].setValue(JSON.stringify(this.messageTemplate.template));
+    this.f['template'].setValue(this.messageTemplate.template);
 
     const id = this.messageTemplateForm.get('id').value;
 
     const isCreate = id == null || id.length == 0 ? true : false;
-
-    //let field: Field = JSON.parse(this.messageTemplateForm.get('template').value);
-
-    this.f['template'].setValue(this.messageTemplateForm.get('template').value);
 
     this.messageTemplateService.save(this.messageTemplateForm.value, isCreate).subscribe(
       messageTemplate => {
@@ -261,12 +263,12 @@ export class TemplateEditComponent implements OnInit {
         this.load();
         setTimeout(() => {
           this.feedback = null;
-          this.router.navigate(['/templates']);
+              this.router.navigate(['/templates']);
         }, 1000);
       }
     );
 
-  }
+    }
 
   cancel() {
     this.router.navigate(['/templates']);

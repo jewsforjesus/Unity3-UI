@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Template } from 'src/app/models/template.model';
 import { Page } from 'src/app/models/page.model';
 import { TemplateService } from 'src/app/services/template.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template',
@@ -19,6 +20,7 @@ export class TemplateComponent implements OnInit {
   }
 
   constructor(    private formBuilder: FormBuilder, 
+    private router: Router,
     private messageTemplateService: TemplateService) {
   }
 
@@ -71,7 +73,8 @@ export class TemplateComponent implements OnInit {
           this.messageTemplate = messageTemplate;
           this.feedback = {type: 'success', message: 'Save was successful!'};
           this.messageTemplateForm.reset();
-          this.load();
+          //this.load();
+          this.router.navigate(['/templates/',this.messageTemplate.id]);
           setTimeout(() => {
             this.feedback = null;
           }, 1000);
